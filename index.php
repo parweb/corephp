@@ -38,4 +38,3 @@ unset ( $include_path );
 require 'functions.php';
 
 Config::parseApplicationFiles ();
-
