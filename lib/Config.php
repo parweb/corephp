@@ -56,17 +56,28 @@ abstract class Config
     /**
      * Get a config value
      *
-     * @param string $path
+     * @param string $key
      * @param mixed $default
      * @return mixed
      */
-    public static function get ( $path, $default = null )
+    public static function get ( $key, $default = null )
     {
-        if ( isset ( self::$configs [$path] ) )
+        if ( isset ( self::$configs [$key] ) )
         {
-            return self::$configs [$path];
+            return self::$configs [$key];
         }
 
         return $default;
+    }
+    
+    /**
+     * Set a config value
+     * 
+     * @param string $key
+     * @param mixed $value
+     */
+    public static function set ( $key, $value )
+    {
+        self::$configs [$key] = $value;
     }
 }
