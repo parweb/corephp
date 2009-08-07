@@ -20,7 +20,7 @@
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   Config
+ * @category   Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  * @version    0.1
@@ -28,25 +28,74 @@
 
 require_once __DIR__ . '/../TestHelper.php';
 
+class FooController
+{
+}
+
+class BarController extends Controller
+{
+    public function validAction ()
+    {
+        return __METHOD__;
+    }
+    
+    protected function invalidAction ()
+    {
+        return __METHOD__;
+    }
+}
+
 /**
- * Config test class
+ * Controller test class
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   Config
+ * @category   Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-class ConfigTest extends PHPUnit_Framework_TestCase
+class ControllerTest extends PHPUnit_Framework_TestCase
 {
-    public function testSetAndGet ()
+    /**
+     * @expectedException Controller\Exception
+     */
+    public function testFactoryInexistentController ()
     {
-        Config::set ( 'foo.bar', 'foo' );
-        $this->assertEquals ( 'foo', Config::get ( 'foo.bar' ) );
+        Controller::factory ( 'Baz' );
     }
     
-    public function testGetWithDefaultValue ()
+    /**
+     * @expectedException Controller\Exception
+     */
+    public function testFactoryInvalidController ()
     {
-        $this->assertEquals ( 'default', Config::get ( 'foo.baz', 'default' ) );
+        Controller::factory ( 'Foo' );
+    }
+    
+    public function testFactoryValidController ()
+    {
+        Controller::factory ( 'Bar' );
+    }
+    
+    /**
+     * @expectedException Controller\Exception
+     */
+    public function testDispatchInexistentAction ()
+    {
+        Controller::dispatch ( 'Bar', 'inexistentAction' );
+    }
+    
+    /**
+     * @expectedException Controller\Exception
+     */
+    public function testDispatchNotPublicAction ()
+    {
+        Controller::dispatch ( 'Bar', 'invalidAction' );
+    }
+    
+    public function testDispatchValidAction ()
+    {
+        $return = Controller::dispatch ( 'Bar', 'validAction' );
+        $this->assertEquals ( $return, 'BarController::validAction' );
     }
 }

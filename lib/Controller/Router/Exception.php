@@ -19,20 +19,24 @@
  * along with Core PHP Framework. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package    Core
+ * @subpackage Controller
+ * @category   Router
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  * @version    0.1
  */
 
-// Buffer and error reporting
-ob_start ();
-error_reporting ( E_ALL | E_STRICT );
+namespace Controller\Router;
 
-// Set include path
-$include_path = implode ( PATH_SEPARATOR, array_map ( 'realpath', array ( 'lib', 'app/controllers' ) ) );
-set_include_path ( $include_path );
-
-unset ( $include_path );
-
-// Autoload
-require 'functions.php';
+/**
+ * Controller router exception class
+ *
+ * @package    Core
+ * @subpackage Controller
+ * @category   Router
+ * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
+ * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
+ */
+class Exception extends \Exception
+{
+}

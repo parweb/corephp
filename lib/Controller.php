@@ -57,7 +57,7 @@ abstract class Controller
             throw new Controller\Exception ( "Controller `$controller' is not a controller" );
         }
 
-        return new $controller ( );
+        return new $controller;
     }
 
     /**
