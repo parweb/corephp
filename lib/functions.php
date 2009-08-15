@@ -43,7 +43,24 @@ function __autoload ( $class )
 
     if ( $fh )
     {
-        @fclose ( $fh );
+        fclose ( $fh );
         require_once $file;
     }
+}
+
+/**
+ * I believe that mb_lcfirst will be soon added in PHP, but for now this could be useful
+ *
+ * @param string $word
+ * @param string $encoding
+ * @return string
+ */
+function mb_lcfirst ( $word, $encoding = null )
+{
+    if ( !$encoding )
+    {
+        $encoding = mb_internal_encoding ();
+    }
+
+    return preg_replace ( '/^./e', "mb_strtolower ( '\\0', \$encoding )", $word );
 }

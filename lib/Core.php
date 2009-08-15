@@ -39,6 +39,7 @@ abstract class Core
     public static function boot ()
     {
         Config::parseApplicationFiles ();
+        self::loadVendorPlugins ();
         self::loadBootFiles ();
     }
 
@@ -52,10 +53,21 @@ abstract class Core
             require $file;
         }
     }
-    
+
+    /**
+     * Load vendor plugins
+     */
+    protected static function loadVendorPlugins ()
+    {
+        foreach ( new GlobIterator ( 'vendor/plugins/*/init.php', GlobIterator::CURRENT_AS_PATHNAME ) as $file )
+        {
+            require $file;
+        }
+    }
+
     /**
      * Dispatch request
-     * 
+     *
      * @see Controller\Router::dispatch()
      */
     public static function dispatch ()

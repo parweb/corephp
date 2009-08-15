@@ -94,17 +94,7 @@ class Route
         
         if ( preg_match ( $this->regex, $uri, $options ) )
         {
-            $options = array_merge ( $this->options, $options );
-            
-            foreach ( $options as $key => $value )
-            {
-                if ( is_numeric ( $key ) )
-                {
-                    unset ( $options [$key] ); // Discard numeric matches
-                }
-            }
-            
-            return $options;
+            return array_merge ( $this->options, $options );
         }
         
         return false;

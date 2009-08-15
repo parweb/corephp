@@ -31,8 +31,8 @@ require_once 'PHPUnit/Framework.php';
 ob_start ();
 error_reporting ( E_ALL | E_STRICT );
 
-// Go to framework root dir
-chdir ( __DIR__ . '/../' );
+// Go to framework dir
+chdir ( dirname ( __DIR__ ) );
 
 // Set include path
 $include_path = implode ( PATH_SEPARATOR, array_map ( 'realpath', array ( 'lib', 'app/controllers' ) ) );

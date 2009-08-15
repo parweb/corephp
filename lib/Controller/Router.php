@@ -83,7 +83,7 @@ abstract class Router
                 break;
             }
         }
-        
+
         if (! $options )
         {
             throw new Router\Exception ( 'No route matches' );
