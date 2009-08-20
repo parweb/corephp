@@ -38,7 +38,7 @@ class BarController extends Controller
     {
         return __METHOD__;
     }
-    
+
     protected function invalidAction ()
     {
         return __METHOD__;
@@ -54,48 +54,42 @@ class BarController extends Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-class ControllerTest extends PHPUnit_Framework_TestCase
-{
+class ControllerTest extends PHPUnit_Framework_TestCase {
     /**
      * @expectedException Controller\Exception
      */
-    public function testFactoryInexistentController ()
-    {
+    public function testFactoryInexistentController () {
         Controller::factory ( 'Baz' );
     }
-    
+
     /**
      * @expectedException Controller\Exception
      */
-    public function testFactoryInvalidController ()
-    {
+    public function testFactoryInvalidController () {
         Controller::factory ( 'Foo' );
     }
-    
-    public function testFactoryValidController ()
-    {
+
+    public function testFactoryValidController () {
         Controller::factory ( 'Bar' );
     }
-    
+
     /**
      * @expectedException Controller\Exception
      */
-    public function testDispatchInexistentAction ()
-    {
+    public function testDispatchInexistentAction () {
         Controller::dispatch ( 'Bar', 'inexistentAction' );
     }
-    
+
     /**
      * @expectedException Controller\Exception
      */
-    public function testDispatchNotPublicAction ()
-    {
+    public function testDispatchNotPublicAction () {
         Controller::dispatch ( 'Bar', 'invalidAction' );
     }
-    
-    public function testDispatchValidAction ()
-    {
+
+    public function testDispatchValidAction () {
         $return = Controller::dispatch ( 'Bar', 'validAction' );
         $this->assertEquals ( $return, 'BarController::validAction' );
     }
 }
+

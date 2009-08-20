@@ -37,59 +37,53 @@ namespace Controller;
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-abstract class Router
-{
+abstract class Router {
     /**
      * Connected routes
-     * 
+     *
      * @var array
      */
     protected static $routes = array ();
-    
+
     /**
      * Connect a route
-     * 
+     *
      * @param string $url
      * @param array $options
      */
-    public static function connect ( $url, array $options = array () )
-    {
+    public static function connect ( $url, array $options = array () ) {
         self::$routes [$url] = new Router\Route ( $url, $options );
     }
-    
+
     /**
      * Disconnect a route
-     * 
+     *
      * @param string $url
      */
-    public static function disconnect ( $url )
-    {
+    public static function disconnect ( $url ) {
         unset ( self::$routes [$url] );
     }
-    
+
     /**
      * Dispatch request
      */
-    public static function dispatch ()
-    {
+    public static function dispatch () {
         // Parse route
         $uri = isset ( $_SERVER ['PATH_INFO'] ) ? trim ( $_SERVER ['PATH_INFO'], '/' ) : '/';
         $options = null;
-        
-        foreach ( self::$routes as $route )
-        {
-            if ( $options = $route->match ( $uri ) )
-            {
+
+        foreach ( self::$routes as $route ) {
+            if ( $options = $route->match ( $uri ) ) {
                 break;
             }
         }
 
-        if (! $options )
-        {
+        if ( !$options ) {
             throw new Router\Exception ( 'No route matches' );
         }
-        
+
         // Dispatch
         \Controller::dispatch ( $options ['controller'], $options ['action'] );
     }
 }
+

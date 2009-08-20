@@ -42,3 +42,4 @@ require 'functions.php';
 
 Core::boot ();
 Core::dispatch ();
+

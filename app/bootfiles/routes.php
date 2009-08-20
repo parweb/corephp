@@ -26,9 +26,11 @@
 
 use Controller\Router;
 
-Router::connect ( '/' ); 
-Router::connect ( ':controller' );
-Router::connect ( ':controller/:action' );
-Router::connect ( ':controller/:action.:type' );
-Router::connect ( ':controller/:action/:id' );
-Router::connect ( ':controller/:action/:id.:type' );
+// Default routes
+Router::connect('/');
+Router::connect(':controller');
+Router::connect(':controller/:action');
+Router::connect(':controller/:action.:type');
+Router::connect(':controller/:action/:id');
+Router::connect(':controller/:action/:id.:type');
+

@@ -36,9 +36,10 @@ chdir ( dirname ( __DIR__ ) );
 
 // Set include path
 $include_path = implode ( PATH_SEPARATOR, array_map ( 'realpath', array ( 'lib', 'app/controllers' ) ) );
-set_include_path ( $include_path );
+set_include_path ( $include_path . PATH_SEPARATOR . get_include_path () );
 
 unset ( $include_path );
 
 // Autoload
 require 'functions.php';
+

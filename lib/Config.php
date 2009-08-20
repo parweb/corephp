@@ -33,8 +33,7 @@
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-abstract class Config
-{
+abstract class Config {
     /**
      * Loaded configs
      *
@@ -45,10 +44,8 @@ abstract class Config
     /**
      * Parse application config files
      */
-    public static function parseApplicationFiles ()
-    {
-        foreach ( new GlobIterator ( 'app/config/*.ini', GlobIterator::CURRENT_AS_PATHNAME ) as $file )
-        {
+    public static function parseApplicationFiles () {
+        foreach ( new GlobIterator ( 'app/config/*.ini', GlobIterator::CURRENT_AS_PATHNAME ) as $file ) {
             self::$configs = array_merge ( self::$configs, parse_ini_file ( $file ) );
         }
     }
@@ -60,24 +57,22 @@ abstract class Config
      * @param mixed $default
      * @return mixed
      */
-    public static function get ( $key, $default = null )
-    {
-        if ( isset ( self::$configs [$key] ) )
-        {
+    public static function get ( $key, $default = null ) {
+        if ( isset ( self::$configs [$key] ) ) {
             return self::$configs [$key];
         }
 
         return $default;
     }
-    
+
     /**
      * Set a config value
-     * 
+     *
      * @param string $key
      * @param mixed $value
      */
-    public static function set ( $key, $value )
-    {
+    public static function set ( $key, $value ) {
         self::$configs [$key] = $value;
     }
 }
+

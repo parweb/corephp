@@ -36,13 +36,11 @@ const NAMESPACE_SEPARATOR = '\\';
  *
  * @param string $class
  */
-function __autoload ( $class )
-{
+function __autoload ( $class ) {
     $file = str_replace ( NAMESPACE_SEPARATOR, DIRECTORY_SEPARATOR, "$class.php" );
     $fh = @fopen ( $file, 'r', true );
 
-    if ( $fh )
-    {
+    if ( $fh ) {
         fclose ( $fh );
         require_once $file;
     }
@@ -55,12 +53,11 @@ function __autoload ( $class )
  * @param string $encoding
  * @return string
  */
-function mb_lcfirst ( $word, $encoding = null )
-{
-    if ( !$encoding )
-    {
+function mb_lcfirst ( $word, $encoding = null ) {
+    if ( !$encoding ) {
         $encoding = mb_internal_encoding ();
     }
 
     return preg_replace ( '/^./e', "mb_strtolower ( '\\0', \$encoding )", $word );
 }
+

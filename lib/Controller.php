@@ -33,8 +33,7 @@
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-abstract class Controller
-{
+abstract class Controller {
     /**
      * Factory the controller
      *
@@ -43,17 +42,14 @@ abstract class Controller
      * @throws Controller\Exception when controller not found
      * @throws Controller\Exception when $controller is not a controller
      */
-    public static function factory ( $controller )
-    {
+    public static function factory ( $controller ) {
         $controller = $controller . 'Controller';
 
-        if ( !class_exists ( $controller ) )
-        {
+        if ( !class_exists ( $controller ) ) {
             throw new Controller\Exception ( "Controller `$controller' not found" );
         }
 
-        if ( !is_subclass_of ( $controller, __CLASS__ ) || $controller == 'ApplicationController' )
-        {
+        if ( !is_subclass_of ( $controller, __CLASS__ ) || $controller == 'ApplicationController' ) {
             throw new Controller\Exception ( "Controller `$controller' is not a controller" );
         }
 
@@ -62,28 +58,26 @@ abstract class Controller
 
     /**
      * Dispatch a controller action
-     * 
+     *
      * @param string $controller
      * @param string $action
      * @return mixed the returned value of action
      * @throws Controller\Exception when action not found
      * @throws Controller\Exception when action is not public
      */
-    public static function dispatch ( $controller, $action )
-    {
+    public static function dispatch ( $controller, $action ) {
         $controller = self::factory ( $controller );
         $reflection = new ReflectionClass ( $controller );
 
-        if ( !$reflection->hasMethod ( $action ) )
-        {
+        if ( !$reflection->hasMethod ( $action ) ) {
             throw new Controller\Exception ( "Action `$action' not found" );
         }
 
-        if ( !$reflection->getMethod ( $action )->isPublic () )
-        {
+        if ( !$reflection->getMethod ( $action )->isPublic () ) {
             throw new Controller\Exception ( "Action `$action' is not public" );
         }
 
         return $controller->$action ();
     }
 }
+

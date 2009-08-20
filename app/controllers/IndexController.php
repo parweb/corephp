@@ -37,17 +37,14 @@
  */
 class IndexController extends ApplicationController
 {
-    public function index ()
-    {
+    public function index () {
         $classes = array_reverse ( get_declared_classes () );
         $own_classes = array ();
 
-        foreach ( $classes as $class )
-        {
+        foreach ( $classes as $class ) {
             $own_classes [] = $class;
 
-            if ( $class == 'Core' )
-            {
+            if ( $class == 'Core' ) {
                 break;
             }
         }
@@ -55,3 +52,4 @@ class IndexController extends ApplicationController
         var_dump ( array_reverse ( $own_classes ) );
     }
 }
+

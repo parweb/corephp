@@ -31,13 +31,11 @@
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-abstract class Core
-{
+abstract class Core {
     /**
      * Boot framework
      */
-    public static function boot ()
-    {
+    public static function boot () {
         Config::parseApplicationFiles ();
         self::loadVendorPlugins ();
         self::loadBootFiles ();
@@ -46,10 +44,8 @@ abstract class Core
     /**
      * Load application boot files
      */
-    protected static function loadBootFiles ()
-    {
-        foreach ( new GlobIterator ( 'app/bootfiles/*.php', GlobIterator::CURRENT_AS_PATHNAME ) as $file )
-        {
+    protected static function loadBootFiles () {
+        foreach ( new GlobIterator ( 'app/bootfiles/*.php', GlobIterator::CURRENT_AS_PATHNAME ) as $file ) {
             require $file;
         }
     }
@@ -57,10 +53,8 @@ abstract class Core
     /**
      * Load vendor plugins
      */
-    protected static function loadVendorPlugins ()
-    {
-        foreach ( new GlobIterator ( 'vendor/plugins/*/init.php', GlobIterator::CURRENT_AS_PATHNAME ) as $file )
-        {
+    protected static function loadVendorPlugins () {
+        foreach ( new GlobIterator ( 'vendor/plugins/*/init.php', GlobIterator::CURRENT_AS_PATHNAME ) as $file ) {
             require $file;
         }
     }
@@ -70,8 +64,8 @@ abstract class Core
      *
      * @see Controller\Router::dispatch()
      */
-    public static function dispatch ()
-    {
+    public static function dispatch () {
         Controller\Router::dispatch ();
     }
 }
+

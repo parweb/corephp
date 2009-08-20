@@ -37,77 +37,73 @@ namespace Controller\Router;
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-class Route
-{
+class Route {
     /**
      * Pseudo constant for default options
-     * 
+     *
      * @var array
      */
     protected static $DEFAULT_OPTIONS = array (
         'controller' => 'index',
         'action'     => 'index',
         'type'       => 'html' );
-    
+
     /**
      * URL
-     * 
+     *
      * @var string
      */
     protected $url;
-    
+
     /**
      * Route options
-     * 
+     *
      * @var array
      */
     protected $options;
-    
+
     /**
      * Compiled regex
-     * 
+     *
      * @var string
      */
     protected $regex;
-    
+
     /**
      * Set $url and $options
-     * 
+     *
      * @param string $url
      * @param array $options
      */
-    public function __construct ( $url, array $options = array () )
-    {
+    public function __construct ( $url, array $options = array () ) {
         $this->url = $url;
         $this->options = array_merge ( self::$DEFAULT_OPTIONS, $options );
     }
-    
+
     /**
      * Route match with $uri?
-     * 
+     *
      * @param string $uri
      * @return array or false
      */
-    public function match ( $uri )
-    {
+    public function match ( $uri ) {
         $this->regex or $this->makeRegex ();
-        
-        if ( preg_match ( $this->regex, $uri, $options ) )
-        {
+
+        if ( preg_match ( $this->regex, $uri, $options ) ) {
             return array_merge ( $this->options, $options );
         }
-        
+
         return false;
     }
-    
+
     /**
      * Make route regex
      */
-    protected function makeRegex ()
-    {
+    protected function makeRegex () {
         $url = preg_quote ( $this->url, '/' );
         $this->regex = '/^'
         			 . preg_replace ( '/\\\:([a-zA-Z\d]+)/', '(?<\1>[a-zA-Z\d]+)', $url )
         			 . '$/';
     }
 }
+

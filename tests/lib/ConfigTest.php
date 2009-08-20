@@ -37,16 +37,14 @@ require_once __DIR__ . '/../TestHelper.php';
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-class ConfigTest extends PHPUnit_Framework_TestCase
-{
-    public function testSetAndGet ()
-    {
+class ConfigTest extends PHPUnit_Framework_TestCase {
+    public function testSetAndGet () {
         Config::set ( 'foo.bar', 'foo' );
         $this->assertEquals ( 'foo', Config::get ( 'foo.bar' ) );
     }
-    
-    public function testGetWithDefaultValue ()
-    {
+
+    public function testGetWithDefaultValue () {
         $this->assertEquals ( 'default', Config::get ( 'foo.baz', 'default' ) );
     }
 }
+

@@ -33,8 +33,7 @@
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-abstract class Inflector
-{
+abstract class Inflector {
     /**
      * Plural rules
      *
@@ -57,20 +56,12 @@ abstract class Inflector
     protected static $uncountables = array ();
 
     /**
-     * Human rules
-     *
-     * @var array
-     */
-    protected static $humans = array ();
-
-    /**
      * Add a new plural rule
      *
      * @param string $rule
      * @param string $replacement
      */
-    public static function plural ( $rule, $replacement )
-    {
+    public static function plural ( $rule, $replacement ) {
         array_unshift ( self::$plurals, array ( $rule, $replacement ) );
     }
 
@@ -80,8 +71,7 @@ abstract class Inflector
      * @param string $rule
      * @param string $replacement
      */
-    public static function singular ( $rule, $replacement )
-    {
+    public static function singular ( $rule, $replacement ) {
         array_unshift ( self::$singulars, array ( $rule, $replacement ) );
     }
 
@@ -91,8 +81,7 @@ abstract class Inflector
      * @param string $singular
      * @param string $plural
      */
-    public static function irregular ( $singular, $plural )
-    {
+    public static function irregular ( $singular, $plural ) {
         self::plural ( "/^$singular|$plural$/i", $plural );
         self::singular ( "/^$plural|$singular$/i", $singular );
     }
@@ -102,14 +91,10 @@ abstract class Inflector
      *
      * @param string|array $words
      */
-    public static function uncountable ( $words )
-    {
-        if ( is_array ( $words ) )
-        {
+    public static function uncountable ( $words ) {
+        if ( is_array ( $words ) ) {
             $words = array_map ( 'mb_strtolower', $words );
-        }
-        else
-        {
+        } else {
             $words = array ( mb_strtolower ( $words ) );
         }
 
@@ -117,57 +102,33 @@ abstract class Inflector
     }
 
     /**
-     * Add a new human rule
-     *
-     * @param string $rule
-     * @param string $replacement
-     */
-    public static function human ( $rule, $replacement )
-    {
-        array_unshift ( self::$humans, array ( $rule, $replacement ) );
-    }
-
-    /**
      * Flush all rules
      */
-    public static function flush ()
-    {
+    public static function flush () {
         self::flushPlurals ();
         self::flushSingulars ();
         self::flushUncountables ();
-        self::flushHumans ();
     }
 
     /**
      * Flush plural rules
      */
-    public static function flushPlurals ()
-    {
+    public static function flushPlurals () {
         self::$plurals = array ();
     }
 
     /**
      * Flush singular rules
      */
-    public static function flushSingulars ()
-    {
+    public static function flushSingulars () {
         self::$singulars = array ();
     }
 
     /**
      * Flush uncountable words
      */
-    public static function flushUncountables ()
-    {
+    public static function flushUncountables () {
         self::$uncountables = array ();
-    }
-
-    /**
-     * Flush humans rules
-     */
-    public static function flushHumans ()
-    {
-        self::$humans = array ();
     }
 
     /**
@@ -176,17 +137,13 @@ abstract class Inflector
      * @param string $word
      * @return string
      */
-    public static function pluralize ( $word )
-    {
-        if ( in_array ( mb_strtolower ( $word ), self::$uncountables ) )
-        {
+    public static function pluralize ( $word ) {
+        if ( in_array ( mb_strtolower ( $word ), self::$uncountables ) ) {
             return $word;
         }
 
-        foreach ( self::$plurals as $rule )
-        {
-            if ( preg_match ( $rule [0], $word ) )
-            {
+        foreach ( self::$plurals as $rule ) {
+            if ( preg_match ( $rule [0], $word ) ) {
                 return preg_replace ( $rule [0], $rule [1], $word );
             }
         }
@@ -200,17 +157,13 @@ abstract class Inflector
      * @param string $word
      * @return string
      */
-    public static function singularize ( $word )
-    {
-        if ( in_array ( mb_strtolower ( $word ), self::$uncountables ) )
-        {
+    public static function singularize ( $word ) {
+        if ( in_array ( mb_strtolower ( $word ), self::$uncountables ) ) {
             return $word;
         }
 
-        foreach ( self::$singulars as $rule )
-        {
-            if ( preg_match ( $rule [0], $word ) )
-            {
+        foreach ( self::$singulars as $rule ) {
+            if ( preg_match ( $rule [0], $word ) ) {
                 return preg_replace ( $rule [0], $rule [1], $word );
             }
         }
@@ -219,23 +172,37 @@ abstract class Inflector
     }
 
     /**
-     * Camelize the word - Also convert '/' to '\' to convert namespaces
+     * Camelize the word - Also convert DIRECTORY_SEPARATOR to NAMESPACE_SEPARATOR to convert namespaces
      *
      * @param string $word
      * @param boolean $lcfirst
      * @return string
      */
-    public static function camelize ( $word, $lcfirst = false )
-    {
-        $word = str_replace ( '/', NAMESPACE_SEPARATOR, $word );
+    public static function camelize ( $word, $lcfirst = false ) {
+        $word = str_replace ( DIRECTORY_SEPARATOR, NAMESPACE_SEPARATOR, $word );
         $word = preg_replace ( '/^.|[\\\_]./e', "mb_strtoupper ( '\\0' )", $word );
         $word = str_replace ( '_', '', $word );
 
-        if ( $lcfirst )
-        {
+        if ( $lcfirst ) {
             $word = mb_lcfirst ( $word );
         }
 
         return $word;
     }
+
+    /**
+     * Underscore the word - Also convert NAMESPACE_SEPARATOR to DIRECTORY_SEPARATOR to convert path names
+     *
+     * @param string $word
+     * @return string
+     */
+    public static function underscore ( $word ) {
+        $word = str_replace ( NAMESPACE_SEPARATOR, DIRECTORY_SEPARATOR, $word );
+        $word = preg_replace ( '/([A-Z]+)([A-Z][a-z])/', '\1_\2', $word );
+        $word = preg_replace ( '/([a-z\d])([A-Z])/', '\1_\2', $word );
+        $word = str_replace ( '-', '_', mb_strtolower ( $word ) );
+
+        return $word;
+    }
 }
+
