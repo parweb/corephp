@@ -37,10 +37,11 @@ const NAMESPACE_SEPARATOR = '\\';
  * @param string $class
  */
 function __autoload ( $class ) {
-    $file = str_replace ( NAMESPACE_SEPARATOR, DIRECTORY_SEPARATOR, "$class.php" );
+    $file = Inflector::underscore ( $class ) . '.php';
     $fh = @fopen ( $file, 'r', true );
 
     if ( $fh ) {
+
         fclose ( $fh );
         require_once $file;
     }

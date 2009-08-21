@@ -38,6 +38,7 @@ set_include_path ( $include_path );
 unset ( $include_path );
 
 // Autoload
+require 'inflector.php';
 require 'functions.php';
 
 Core::boot ();
