@@ -19,60 +19,70 @@
  * along with Core PHP Framework. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package    Core
- * @subpackage Config
+ * @subpackage Controller
+ * @category   Router
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  * @version    0.1
  */
 
+namespace Controller;
+
 /**
- * Config class
+ * Controller router class
  *
  * @package    Core
- * @subpackage Config
+ * @subpackage Controller
+ * @category   Router
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-abstract class Config {
+abstract class Router {
     /**
-     * Loaded configs
+     * Connected routes
      *
      * @var array
      */
-    protected static $configs = array ();
+    protected static $routes = array();
 
     /**
-     * Parse application config files
+     * Connect a route
+     *
+     * @param string $url
+     * @param array $options
      */
-    public static function parseApplicationFiles () {
-        foreach ( new GlobIterator ( 'app/config/*.ini', GlobIterator::CURRENT_AS_PATHNAME ) as $file ) {
-            self::$configs = array_merge ( self::$configs, parse_ini_file ( $file ) );
-        }
+    public static function connect ($url, array $options = array ()) {
+        self::$routes[$url] = new Router\Route($url, $options);
     }
 
     /**
-     * Get a config value
+     * Disconnect a route
      *
-     * @param string $key
-     * @param mixed $default
-     * @return mixed
+     * @param string $url
      */
-    public static function get ( $key, $default = null ) {
-        if ( isset ( self::$configs [$key] ) ) {
-            return self::$configs [$key];
-        }
-
-        return $default;
+    public static function disconnect ($url) {
+        unset(self::$routes[$url]);
     }
 
     /**
-     * Set a config value
-     *
-     * @param string $key
-     * @param mixed $value
+     * Dispatch request
      */
-    public static function set ( $key, $value ) {
-        self::$configs [$key] = $value;
+    public static function dispatch () {
+        // Parse route
+        $uri = isset($_SERVER['PATH_INFO']) ? trim($_SERVER['PATH_INFO'], '/') : '/';
+        $options = null;
+
+        foreach (self::$routes as $route) {
+            if ($options = $route->match($uri)) {
+                break;
+            }
+        }
+
+        if (!$options) {
+            throw new Router\Exception('No route matches');
+        }
+
+        // Dispatch
+        \Controller::dispatch($options['controller'], $options['action']);
     }
 }
-

@@ -28,23 +28,6 @@
 
 require_once __DIR__ . '/../TestHelper.php';
 
-class FooController
-{
-}
-
-class BarController extends Controller
-{
-    public function validAction ()
-    {
-        return __METHOD__;
-    }
-
-    protected function invalidAction ()
-    {
-        return __METHOD__;
-    }
-}
-
 /**
  * Controller test class
  *
@@ -59,37 +42,36 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
      * @expectedException Controller\Exception
      */
     public function testFactoryInexistentController () {
-        Controller::factory ( 'Baz' );
+        Controller::factory ( 'inexistent' );
     }
 
     /**
      * @expectedException Controller\Exception
      */
     public function testFactoryInvalidController () {
-        Controller::factory ( 'Foo' );
+        Controller::factory ( 'invalid' );
     }
 
     public function testFactoryValidController () {
-        Controller::factory ( 'Bar' );
+        Controller::factory ( 'index' );
     }
 
     /**
      * @expectedException Controller\Exception
      */
     public function testDispatchInexistentAction () {
-        Controller::dispatch ( 'Bar', 'inexistentAction' );
+        Controller::dispatch ( 'index', 'inexistent' );
     }
 
     /**
      * @expectedException Controller\Exception
      */
-    public function testDispatchNotPublicAction () {
-        Controller::dispatch ( 'Bar', 'invalidAction' );
+    public function testDispatchProtectedAction () {
+        Controller::dispatch ( 'index', 'protected_action' );
     }
 
-    public function testDispatchValidAction () {
-        $return = Controller::dispatch ( 'Bar', 'validAction' );
-        $this->assertEquals ( $return, 'BarController::validAction' );
+    public function testDispatchPublicAction () {
+        $this->assertEquals ( 'IndexController::index', Controller::dispatch ( 'index', 'index' ) );
     }
 }
 

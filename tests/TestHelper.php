@@ -27,20 +27,20 @@
 
 require_once 'PHPUnit/Framework.php';
 
-// Buffer and error reporting
-ob_start ();
-error_reporting ( E_ALL | E_STRICT );
+// Filter the test application dir
+PHPUnit_Util_Filter::addDirectoryToFilter('app');
 
-// Go to framework dir
-chdir ( dirname ( __DIR__ ) );
+// Buffer and error reporting
+ob_start();
+error_reporting(E_ALL | E_STRICT);
 
 // Set include path
-$include_path = implode ( PATH_SEPARATOR, array_map ( 'realpath', array ( 'lib', 'app/controllers' ) ) );
-set_include_path ( $include_path . PATH_SEPARATOR . get_include_path () );
+$include_path = array_map('realpath', array('../lib' , 'app/controllers' , get_include_path()));
+set_include_path(implode(PATH_SEPARATOR, $include_path));
 
-unset ( $include_path );
+unset($include_path);
 
 // Autoload
-require 'inflector.php';
 require 'functions.php';
 
+Core::boot();

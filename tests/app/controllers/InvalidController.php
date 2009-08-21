@@ -19,22 +19,29 @@
  * along with Core PHP Framework. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package    Core
- * @subpackage Controller
+ * @subpackage Application
+ * @category   Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  * @version    0.1
  */
 
-namespace Controller;
-
 /**
- * Controller exception class
+ * Invalid controller (does not extend ApplicationController)
  *
  * @package    Core
- * @subpackage Controller
+ * @subpackage Application
+ * @category   Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-class Exception extends \Exception {
-}
+class InvalidController
+{
+    public function index () {
+        return __METHOD__;
+    }
 
+    protected function protectedAction () {
+        return __METHOD__;
+    }
+}

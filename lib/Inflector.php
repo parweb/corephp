@@ -39,21 +39,21 @@ abstract class Inflector {
      *
      * @var array
      */
-    protected static $plurals = array ();
+    protected static $plurals = array();
 
     /**
      * Singular rules
      *
      * @var array
      */
-    protected static $singulars = array ();
+    protected static $singulars = array();
 
     /**
      * Uncountable words
      *
      * @var array
      */
-    protected static $uncountables = array ();
+    protected static $uncountables = array();
 
     /**
      * Add a new plural rule
@@ -61,8 +61,8 @@ abstract class Inflector {
      * @param string $rule
      * @param string $replacement
      */
-    public static function plural ( $rule, $replacement ) {
-        array_unshift ( self::$plurals, array ( $rule, $replacement ) );
+    public static function plural ($rule, $replacement) {
+        array_unshift(self::$plurals, array($rule , $replacement));
     }
 
     /**
@@ -71,8 +71,8 @@ abstract class Inflector {
      * @param string $rule
      * @param string $replacement
      */
-    public static function singular ( $rule, $replacement ) {
-        array_unshift ( self::$singulars, array ( $rule, $replacement ) );
+    public static function singular ($rule, $replacement) {
+        array_unshift(self::$singulars, array($rule , $replacement));
     }
 
     /**
@@ -81,9 +81,9 @@ abstract class Inflector {
      * @param string $singular
      * @param string $plural
      */
-    public static function irregular ( $singular, $plural ) {
-        self::plural ( "/^$singular|$plural$/i", $plural );
-        self::singular ( "/^$plural|$singular$/i", $singular );
+    public static function irregular ($singular, $plural) {
+        self::plural("/^$singular|$plural$/i", $plural);
+        self::singular("/^$plural|$singular$/i", $singular);
     }
 
     /**
@@ -91,44 +91,44 @@ abstract class Inflector {
      *
      * @param string|array $words
      */
-    public static function uncountable ( $words ) {
-        if ( is_array ( $words ) ) {
-            $words = array_map ( 'mb_strtolower', $words );
+    public static function uncountable ($words) {
+        if (is_array($words)) {
+            $words = array_map('mb_strtolower', $words);
         } else {
-            $words = array ( mb_strtolower ( $words ) );
+            $words = array(mb_strtolower($words));
         }
 
-        self::$uncountables = array_merge ( self::$uncountables, $words );
+        self::$uncountables = array_merge(self::$uncountables, $words);
     }
 
     /**
      * Flush all rules
      */
     public static function flush () {
-        self::flushPlurals ();
-        self::flushSingulars ();
-        self::flushUncountables ();
+        self::flushPlurals();
+        self::flushSingulars();
+        self::flushUncountables();
     }
 
     /**
      * Flush plural rules
      */
     public static function flushPlurals () {
-        self::$plurals = array ();
+        self::$plurals = array();
     }
 
     /**
      * Flush singular rules
      */
     public static function flushSingulars () {
-        self::$singulars = array ();
+        self::$singulars = array();
     }
 
     /**
      * Flush uncountable words
      */
     public static function flushUncountables () {
-        self::$uncountables = array ();
+        self::$uncountables = array();
     }
 
     /**
@@ -137,14 +137,14 @@ abstract class Inflector {
      * @param string $word
      * @return string
      */
-    public static function pluralize ( $word ) {
-        if ( in_array ( mb_strtolower ( $word ), self::$uncountables ) ) {
+    public static function pluralize ($word) {
+        if (in_array(mb_strtolower($word), self::$uncountables)) {
             return $word;
         }
 
-        foreach ( self::$plurals as $rule ) {
-            if ( preg_match ( $rule [0], $word ) ) {
-                return preg_replace ( $rule [0], $rule [1], $word );
+        foreach (self::$plurals as $rule) {
+            if (preg_match($rule[0], $word)) {
+                return preg_replace($rule[0], $rule[1], $word);
             }
         }
 
@@ -157,14 +157,14 @@ abstract class Inflector {
      * @param string $word
      * @return string
      */
-    public static function singularize ( $word ) {
-        if ( in_array ( mb_strtolower ( $word ), self::$uncountables ) ) {
+    public static function singularize ($word) {
+        if (in_array(mb_strtolower($word), self::$uncountables)) {
             return $word;
         }
 
-        foreach ( self::$singulars as $rule ) {
-            if ( preg_match ( $rule [0], $word ) ) {
-                return preg_replace ( $rule [0], $rule [1], $word );
+        foreach (self::$singulars as $rule) {
+            if (preg_match($rule[0], $word)) {
+                return preg_replace($rule[0], $rule[1], $word);
             }
         }
 
@@ -178,13 +178,13 @@ abstract class Inflector {
      * @param boolean $lcfirst
      * @return string
      */
-    public static function camelize ( $word, $lcfirst = false ) {
-        $word = str_replace ( DIRECTORY_SEPARATOR, NAMESPACE_SEPARATOR, $word );
-        $word = preg_replace ( '/^.|[\\\_]./e', "mb_strtoupper ( '\\0' )", $word );
-        $word = str_replace ( '_', '', $word );
+    public static function camelize ($word, $lcfirst = false) {
+        $word = str_replace(DIRECTORY_SEPARATOR, NAMESPACE_SEPARATOR, $word);
+        $word = preg_replace('/^.|[\\\_]./e', "mb_strtoupper ( '\\0' )", $word);
+        $word = str_replace('_', '', $word);
 
-        if ( $lcfirst ) {
-            $word = mb_lcfirst ( $word );
+        if ($lcfirst) {
+            $word = mb_lcfirst($word);
         }
 
         return $word;
@@ -196,13 +196,12 @@ abstract class Inflector {
      * @param string $word
      * @return string
      */
-    public static function underscore ( $word ) {
-        $word = str_replace ( NAMESPACE_SEPARATOR, DIRECTORY_SEPARATOR, $word );
-        $word = preg_replace ( '/([A-Z]+)([A-Z][a-z])/', '\1_\2', $word );
-        $word = preg_replace ( '/([a-z\d])([A-Z])/', '\1_\2', $word );
-        $word = str_replace ( '-', '_', mb_strtolower ( $word ) );
+    public static function underscore ($word) {
+        $word = str_replace(NAMESPACE_SEPARATOR, DIRECTORY_SEPARATOR, $word);
+        $word = preg_replace('/([A-Z]+)([A-Z][a-z])/', '\1_\2', $word);
+        $word = preg_replace('/([a-z\d])([A-Z])/', '\1_\2', $word);
+        $word = str_replace('-', '_', mb_strtolower($word));
 
         return $word;
     }
 }
-

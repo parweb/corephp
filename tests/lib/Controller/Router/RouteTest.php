@@ -30,7 +30,6 @@ namespace Controller\Router;
 
 require_once __DIR__ . '/../../../TestHelper.php';
 
-
 /**
  * Controller router test class
  *

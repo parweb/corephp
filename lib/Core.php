@@ -19,24 +19,52 @@
  * along with Core PHP Framework. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package    Core
- * @subpackage Controller
- * @category   Router
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  * @version    0.1
  */
 
-namespace Controller\Router;
-
 /**
- * Controller router exception class
+ * Core class
  *
  * @package    Core
- * @subpackage Controller
- * @category   Router
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-class Exception extends \Exception {
-}
+abstract class Core {
+    /**
+     * Boot framework
+     */
+    public static function boot () {
+        Config::parseApplicationFiles();
+        self::loadVendorPlugins();
+        self::loadBootFiles();
+    }
 
+    /**
+     * Load application boot files
+     */
+    protected static function loadBootFiles () {
+        foreach (new GlobIterator('app/bootfiles/*.php', GlobIterator::CURRENT_AS_PATHNAME) as $file) {
+            require $file;
+        }
+    }
+
+    /**
+     * Load vendor plugins
+     */
+    protected static function loadVendorPlugins () {
+        foreach (new GlobIterator('vendor/plugins/*/init.php', GlobIterator::CURRENT_AS_PATHNAME) as $file) {
+            require $file;
+        }
+    }
+
+    /**
+     * Dispatch request
+     *
+     * @see Controller\Router::dispatch()
+     */
+    public static function dispatch () {
+        Controller\Router::dispatch();
+    }
+}
