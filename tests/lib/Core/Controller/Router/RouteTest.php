@@ -28,7 +28,6 @@
 
 namespace Core\Controller\Router;
 
-
 require_once __DIR__ . '/../../../../TestHelper.php';
 
 /**
@@ -63,4 +62,3 @@ class RouteTest extends \PHPUnit_Framework_TestCase {
         $this->assertFalse($this->route->match('foo/bar.html/invalid'));
     }
 }
-

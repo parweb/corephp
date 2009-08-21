@@ -44,36 +44,35 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
      * @expectedException Core\Controller\Exception
      */
     public function testFactoryInexistentController () {
-        Controller::factory ( 'inexistent' );
+        Controller::factory('inexistent');
     }
 
     /**
      * @expectedException Core\Controller\Exception
      */
     public function testFactoryInvalidController () {
-        Controller::factory ( 'invalid' );
+        Controller::factory('invalid');
     }
 
     public function testFactoryValidController () {
-        Controller::factory ( 'index' );
+        Controller::factory('index');
     }
 
     /**
      * @expectedException Core\Controller\Exception
      */
     public function testDispatchInexistentAction () {
-        Controller::dispatch ( 'index', 'inexistent' );
+        Controller::dispatch('index', 'inexistent');
     }
 
     /**
      * @expectedException Core\Controller\Exception
      */
     public function testDispatchProtectedAction () {
-        Controller::dispatch ( 'index', 'protected_action' );
+        Controller::dispatch('index', 'protected_action');
     }
 
     public function testDispatchPublicAction () {
-        $this->assertEquals ( 'IndexController::index', Controller::dispatch ( 'index', 'index' ) );
+        $this->assertEquals('IndexController::index', Controller::dispatch('index', 'index'));
     }
 }
-

@@ -39,24 +39,21 @@ require_once __DIR__ . '/../../../TestHelper.php';
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-class RouterTest extends \PHPUnit_Framework_TestCase
-{
-    public function testConnect ()
-    {
-        $_SERVER ['PATH_INFO'] = 'index';
+class RouterTest extends \PHPUnit_Framework_TestCase {
+    public function testConnect () {
+        $_SERVER['PATH_INFO'] = 'index';
 
-        Router::connect ( ':controller' );
-        Router::dispatch ( );
+        Router::connect(':controller');
+        Router::dispatch();
     }
 
     /**
      * @expectedException Core\Controller\Router\Exception
      */
-    public function testDisconnect ()
-    {
-        $_SERVER ['PATH_INFO'] = 'index';
+    public function testDisconnect () {
+        $_SERVER['PATH_INFO'] = 'index';
 
-        Router::disconnect ( ':controller' );
-        Router::dispatch ( );
+        Router::disconnect(':controller');
+        Router::dispatch();
     }
 }

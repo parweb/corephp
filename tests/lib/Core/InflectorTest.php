@@ -41,55 +41,54 @@ require_once __DIR__ . '/../../TestHelper.php';
  */
 class InflectorTest extends \PHPUnit_Framework_TestCase {
     public function testPluralAndPluralize () {
-        Inflector::plural ( '/$/', 's' );
+        Inflector::plural('/$/', 's');
 
-        $this->assertEquals ( 'tests', Inflector::pluralize ( 'test' ) );
+        $this->assertEquals('tests', Inflector::pluralize('test'));
     }
 
     public function testSingularAndSingularize () {
-        Inflector::singular ( '/s$/', '' );
+        Inflector::singular('/s$/', '');
 
-        $this->assertEquals ( 'test', Inflector::singularize ( 'tests' ) );
+        $this->assertEquals('test', Inflector::singularize('tests'));
     }
 
     public function testUncountable () {
-        Inflector::uncountable ( 'equipment' );
+        Inflector::uncountable('equipment');
 
-        $this->assertEquals ( 'equipment', Inflector::pluralize ( 'equipment' ) );
-        $this->assertEquals ( 'equipment', Inflector::singularize ( 'equipment' ) );
+        $this->assertEquals('equipment', Inflector::pluralize('equipment'));
+        $this->assertEquals('equipment', Inflector::singularize('equipment'));
 
-        Inflector::uncountable ( array ( 'fish' ) );
+        Inflector::uncountable('fish');
 
-        $this->assertEquals ( 'fish', Inflector::pluralize ( 'fish' ) );
-        $this->assertEquals ( 'fish', Inflector::singularize ( 'fish' ) );
+        $this->assertEquals('fish', Inflector::pluralize('fish'));
+        $this->assertEquals('fish', Inflector::singularize('fish'));
     }
 
     public function testIrregular () {
-        Inflector::irregular ( 'person', 'people' );
+        Inflector::irregular('person', 'people');
 
-        $this->assertEquals ( 'person', Inflector::singularize ( 'person' ) );
-        $this->assertEquals ( 'person', Inflector::singularize ( 'people' ) );
-        $this->assertEquals ( 'people', Inflector::pluralize ( 'person' ) );
-        $this->assertEquals ( 'people', Inflector::pluralize ( 'people' ) );
+        $this->assertEquals('person', Inflector::singularize('person'));
+        $this->assertEquals('person', Inflector::singularize('people'));
+        $this->assertEquals('people', Inflector::pluralize('person'));
+        $this->assertEquals('people', Inflector::pluralize('people'));
     }
 
     public function testFlush () {
-        Inflector::flush ();
+        Inflector::flush();
 
-        $this->assertEquals ( 'person', Inflector::pluralize ( 'person' ) );
-        $this->assertEquals ( 'people', Inflector::singularize ( 'people' ) );
+        $this->assertEquals('person', Inflector::pluralize('person'));
+        $this->assertEquals('people', Inflector::singularize('people'));
     }
 
     public function testCamelize () {
-        $this->assertEquals ( 'Foo', Inflector::camelize ( 'foo' ) );
-        $this->assertEquals ( 'FooBar', Inflector::camelize ( 'foo_bar' ) );
-        $this->assertEquals ( 'foo\BarBaz', Inflector::camelize ( 'foo/bar_baz', true ) );
+        $this->assertEquals('Foo', Inflector::camelize('foo'));
+        $this->assertEquals('FooBar', Inflector::camelize('foo_bar'));
+        $this->assertEquals('foo\BarBaz', Inflector::camelize('foo/bar_baz', true));
     }
 
     public function testUnderscore () {
-        $this->assertEquals ( 'foo', Inflector::underscore ( 'Foo' ) );
-        $this->assertEquals ( 'foo_bar', Inflector::underscore ( 'FooBar' ) );
-        $this->assertEquals ( 'foo/bar_baz', Inflector::underscore ( 'foo\BarBaz' ) );
+        $this->assertEquals('foo', Inflector::underscore('Foo'));
+        $this->assertEquals('foo_bar', Inflector::underscore('FooBar'));
+        $this->assertEquals('foo/bar_baz', Inflector::underscore('foo\BarBaz'));
     }
 }
-
