@@ -26,7 +26,7 @@
  * @version    0.1
  */
 
-namespace Controller\Router;
+namespace Core\Controller\Router;
 
 /**
  * Controller router class
@@ -45,8 +45,8 @@ class Route {
      */
     protected static $DEFAULT_OPTIONS = array(
     	'controller' => 'index',
-    	'action' => 'index',
-    	'type' => 'html'
+    	'action'     => 'index',
+    	'type'       => 'html'
     );
 
     /**
@@ -101,7 +101,7 @@ class Route {
      * Make route regex
      */
     protected function makeRegex () {
-        $url = preg_quote($this->url, '/');
-        $this->regex = '/^' . preg_replace('/\\\:([a-zA-Z\d]+)/', '(?<\1>[a-zA-Z\d_]+)', $url) . '$/';
+        $url = preg_replace('/\\\:([a-zA-Z\d_]+)/', '(?<\1>[a-zA-Z\d_]+)', preg_quote($this->url, '/'));
+        $this->regex = '/^' . $url . '$/';
     }
 }

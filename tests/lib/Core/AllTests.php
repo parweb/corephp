@@ -19,35 +19,37 @@
  * along with Core PHP Framework. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package    Core
- * @subpackage Application
- * @category   Controller
+ * @subpackage UnitTests
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  * @version    0.1
  */
 
-/**
- * Index controller
- *
- * @package    Core
- * @subpackage Application
- * @category   Controller
- * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
- * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
- */
-class IndexController extends ApplicationController {
-    public function index () {
-        $classes = array_reverse(get_declared_classes());
-        $own_classes = array();
+namespace Core;
 
-        foreach ($classes as $class) {
-            array_unshift ( $own_classes, $class );
+require_once __DIR__ . '/../../TestHelper.php';
 
-            if ($class == 'Core\Core') {
-                break;
-            }
-        }
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Core\AllTests::main');
+}
 
-        var_dump($own_classes);
+class AllTests {
+    public static function suite () {
+        $suite = new \PHPUnit_Framework_TestSuite('Core PHP - Framework');
+
+        $suite->addTestSuite('Core\ProceduralFunctionsTest');
+        $suite->addTestSuite('Core\ConfigTest');
+        $suite->addTestSuite('Core\ControllerTest');
+        $suite->addTestSuite('Core\InflectorTest');
+
+        return $suite;
     }
+
+    public static function main () {
+        \PHPUnit_TextUI_TestRunner::run(self::suite());
+    }
+}
+
+if (PHPUnit_MAIN_METHOD == 'Core\AllTests::main') {
+    AllTests::main();
 }

@@ -26,7 +26,7 @@
  * @version    0.1
  */
 
-namespace Controller;
+namespace Core\Controller;
 
 /**
  * Controller router class
@@ -83,6 +83,6 @@ abstract class Router {
         }
 
         // Dispatch
-        \Controller::dispatch($options['controller'], $options['action']);
+        \Core\Controller::dispatch($options['controller'], $options['action']);
     }
 }

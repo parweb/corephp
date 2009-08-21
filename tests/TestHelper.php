@@ -25,22 +25,24 @@
  * @version    0.1
  */
 
-require_once 'PHPUnit/Framework.php';
-
-// Filter the test application dir
-PHPUnit_Util_Filter::addDirectoryToFilter('app');
-
 // Buffer and error reporting
 ob_start();
 error_reporting(E_ALL | E_STRICT);
 
-// Set include path
-$include_path = array_map('realpath', array('../lib' , 'app/controllers' , get_include_path()));
-set_include_path(implode(PATH_SEPARATOR, $include_path));
+// Go to framework test dir
+chdir(__DIR__);
 
-unset($include_path);
+// PHPUnit
+require_once 'PHPUnit/Framework.php';
+require_once 'PHPUnit/TextUI/TestRunner.php';
+
+PHPUnit_Util_Filter::addDirectoryToFilter(__DIR__);
 
 // Autoload
-require 'functions.php';
+require_once '../lib/Core/functions.php';
 
-Core::boot();
+// Set include path
+$include_path = implode(PATH_SEPARATOR, array_map('realpath', array('lib', '../lib', 'app/controllers')));
+append_include_path($include_path);
+
+unset($include_path);

@@ -31,14 +31,15 @@ error_reporting(E_ALL | E_STRICT);
 // Go to framework dir
 chdir(dirname(__DIR__));
 
+// Autoload
+require_once 'lib/Core/functions.php';
+
 // Set include path
-$include_path = implode(PATH_SEPARATOR, array_map('realpath', array('lib' , 'app/controllers')));
-set_include_path($include_path);
+$include_path = implode(PATH_SEPARATOR, array_map('realpath', array('lib', 'app/controllers')));
+append_include_path($include_path);
 
 unset($include_path);
 
-// Autoload
-require 'functions.php';
-
-Core::boot();
-Core::dispatch();
+// Boot and dispatch request
+Core\Core::boot();
+Core\Core::dispatch();

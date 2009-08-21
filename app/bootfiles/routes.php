@@ -24,7 +24,7 @@
  * @version    0.1
  */
 
-use Controller\Router;
+use Core\Controller\Router;
 
 // Default routes
 Router::connect('/');

@@ -25,6 +25,8 @@
  * @version    0.1
  */
 
+namespace Core;
+
 /**
  * Inflector class
  *
@@ -62,7 +64,7 @@ abstract class Inflector {
      * @param string $replacement
      */
     public static function plural ($rule, $replacement) {
-        array_unshift(self::$plurals, array($rule , $replacement));
+        array_unshift(self::$plurals, array($rule, $replacement));
     }
 
     /**
@@ -72,7 +74,7 @@ abstract class Inflector {
      * @param string $replacement
      */
     public static function singular ($rule, $replacement) {
-        array_unshift(self::$singulars, array($rule , $replacement));
+        array_unshift(self::$singulars, array($rule, $replacement));
     }
 
     /**
@@ -92,12 +94,7 @@ abstract class Inflector {
      * @param string|array $words
      */
     public static function uncountable ($words) {
-        if (is_array($words)) {
-            $words = array_map('mb_strtolower', $words);
-        } else {
-            $words = array(mb_strtolower($words));
-        }
-
+        $words = array_map('mb_strtolower', (array) $words);
         self::$uncountables = array_merge(self::$uncountables, $words);
     }
 

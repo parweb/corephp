@@ -19,59 +19,21 @@
  * along with Core PHP Framework. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package    Core
- * @subpackage UnitTests
- * @category   Controller
+ * @subpackage Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  * @version    0.1
  */
 
-require_once __DIR__ . '/../TestHelper.php';
+namespace Core\Controller;
 
 /**
- * Controller test class
+ * Controller exception class
  *
  * @package    Core
- * @subpackage UnitTests
- * @category   Controller
+ * @subpackage Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-class ControllerTest extends PHPUnit_Framework_TestCase {
-    /**
-     * @expectedException Controller\Exception
-     */
-    public function testFactoryInexistentController () {
-        Controller::factory ( 'inexistent' );
-    }
-
-    /**
-     * @expectedException Controller\Exception
-     */
-    public function testFactoryInvalidController () {
-        Controller::factory ( 'invalid' );
-    }
-
-    public function testFactoryValidController () {
-        Controller::factory ( 'index' );
-    }
-
-    /**
-     * @expectedException Controller\Exception
-     */
-    public function testDispatchInexistentAction () {
-        Controller::dispatch ( 'index', 'inexistent' );
-    }
-
-    /**
-     * @expectedException Controller\Exception
-     */
-    public function testDispatchProtectedAction () {
-        Controller::dispatch ( 'index', 'protected_action' );
-    }
-
-    public function testDispatchPublicAction () {
-        $this->assertEquals ( 'IndexController::index', Controller::dispatch ( 'index', 'index' ) );
-    }
+class Exception extends \Exception {
 }
-

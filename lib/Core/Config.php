@@ -19,21 +19,63 @@
  * along with Core PHP Framework. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package    Core
- * @subpackage Controller
+ * @subpackage Config
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  * @version    0.1
  */
 
-namespace Controller;
+namespace Core;
+
+use GlobIterator;
 
 /**
- * Controller exception class
+ * Config class
  *
  * @package    Core
- * @subpackage Controller
+ * @subpackage Config
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-class Exception extends \Exception {
+abstract class Config {
+    /**
+     * Loaded configs
+     *
+     * @var array
+     */
+    protected static $configs = array();
+
+    /**
+     * Parse application config files
+     */
+    public static function parseApplicationFiles () {
+        foreach (new GlobIterator('app/config/*.ini', GlobIterator::CURRENT_AS_PATHNAME) as $file) {
+            self::$configs = array_merge(self::$configs, parse_ini_file($file));
+        }
+    }
+
+    /**
+     * Get a config value
+     *
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    public static function get ($key, $default = null) {
+        if (isset(self::$configs[$key])) {
+            return self::$configs[$key];
+        }
+
+        return $default;
+    }
+
+    /**
+     * Set a config value
+     *
+     * @param string $key
+     * @param mixed $value
+     */
+    public static function set ($key, $value) {
+        self::$configs[$key] = $value;
+    }
 }
