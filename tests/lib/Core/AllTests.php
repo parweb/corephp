@@ -53,3 +53,4 @@ class AllTests {
 if (PHPUnit_MAIN_METHOD == 'Core\AllTests::main') {
     AllTests::main();
 }
+

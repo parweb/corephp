@@ -43,3 +43,4 @@ unset($include_path);
 // Boot and dispatch request
 Core\Core::boot();
 Core\Core::dispatch();
+

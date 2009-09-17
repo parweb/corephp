@@ -72,3 +72,4 @@ abstract class Core {
         Controller\Router::dispatch();
     }
 }
+

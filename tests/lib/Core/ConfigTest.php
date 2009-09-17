@@ -54,3 +54,4 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('default', Config::get('foo.baz', 'default'));
     }
 }
+

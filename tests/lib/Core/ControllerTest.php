@@ -76,3 +76,4 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('IndexController::index', Controller::dispatch('index', 'index'));
     }
 }
+

@@ -45,3 +45,4 @@ class IndexController extends ApplicationController
         return __METHOD__;
     }
 }
+

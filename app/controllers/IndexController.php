@@ -51,3 +51,4 @@ class IndexController extends ApplicationController {
         var_dump($own_classes);
     }
 }
+

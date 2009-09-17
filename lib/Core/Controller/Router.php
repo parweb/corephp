@@ -86,3 +86,4 @@ abstract class Router {
         \Core\Controller::dispatch($options['controller'], $options['action']);
     }
 }
+

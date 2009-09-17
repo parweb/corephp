@@ -75,3 +75,4 @@ function mb_lcfirst ($word, $encoding = null) {
     return mb_strtolower(mb_substr($word, 0, 1, $encoding), $encoding)
          . mb_substr($word, 1, mb_strlen($word, $encoding) - 1, $encoding);
 }
+

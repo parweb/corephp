@@ -92,3 +92,4 @@ class InflectorTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('foo/bar_baz', Inflector::underscore('foo\BarBaz'));
     }
 }
+

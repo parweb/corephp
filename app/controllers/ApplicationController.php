@@ -37,3 +37,4 @@
  */
 abstract class ApplicationController extends Core\Controller {
 }
+

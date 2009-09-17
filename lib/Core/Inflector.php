@@ -202,3 +202,4 @@ abstract class Inflector {
         return $word;
     }
 }
+

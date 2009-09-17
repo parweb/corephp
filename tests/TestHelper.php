@@ -46,3 +46,4 @@ $include_path = implode(PATH_SEPARATOR, array_map('realpath', array('lib', '../l
 append_include_path($include_path);
 
 unset($include_path);
+

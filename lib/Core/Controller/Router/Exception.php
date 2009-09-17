@@ -39,3 +39,4 @@ namespace Core\Controller\Router;
  */
 class Exception extends \Exception {
 }
+

@@ -37,3 +37,4 @@ namespace Core\Controller;
  */
 class Exception extends \Exception {
 }
+

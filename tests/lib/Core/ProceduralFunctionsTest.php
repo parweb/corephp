@@ -57,3 +57,4 @@ class ProceduralFunctionsTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('çÇÇ', mb_lcfirst('ÇÇÇ', 'utf-8'));
     }
 }
+

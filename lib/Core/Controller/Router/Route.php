@@ -105,3 +105,4 @@ class Route {
         $this->regex = '/^' . $url . '$/';
     }
 }
+

@@ -45,3 +45,4 @@ class InvalidController
         return __METHOD__;
     }
 }
+
