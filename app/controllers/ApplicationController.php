@@ -36,5 +36,6 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
 abstract class ApplicationController extends Controller {
+    protected $layout = 'application';
 }
 

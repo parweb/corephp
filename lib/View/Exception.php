@@ -19,36 +19,22 @@
  * along with Core PHP Framework. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package    Core
- * @subpackage Application
- * @category   Controller
+ * @subpackage View
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  * @version    0.1
  */
 
+namespace View;
+
 /**
- * Home controller
+ * View exception class
  *
  * @package    Core
- * @subpackage Application
- * @category   Controller
+ * @subpackage View
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-class HomeController extends ApplicationController {
-    public function index () {
-        $classes = array_reverse(get_declared_classes());
-        $own_classes = array();
-
-        foreach ($classes as $class) {
-            array_unshift($own_classes, $class);
-
-            if ($class == 'Core') {
-                break;
-            }
-        }
-
-        View::set('classes', $own_classes);
-    }
+class Exception extends \Exception {
 }
 

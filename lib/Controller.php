@@ -35,6 +35,13 @@
  */
 abstract class Controller {
     /**
+     * Layout
+     *
+     * @var string
+     */
+    protected $layout = null;
+
+    /**
      * Factory the controller
      *
      * @param string $controller controller name without 'Controller' at the end
@@ -61,14 +68,14 @@ abstract class Controller {
      *
      * @param string $controller
      * @param string $action
-     * @return mixed the returned value of action
      * @throws Controller\Exception when action not found
      * @throws Controller\Exception when action is not public
      */
     public static function dispatch ($controller, $action) {
-        $controller = self::factory($controller);
+        // Dispatch action to controller
+        $kontroller = self::factory($controller);
         $action = Inflector::camelize($action, true);
-        $reflection = new ReflectionClass($controller);
+        $reflection = new ReflectionClass($kontroller);
 
         if (!$reflection->hasMethod($action)) {
             throw new Controller\Exception("Action `$action' not found");
@@ -78,7 +85,22 @@ abstract class Controller {
             throw new Controller\Exception("Action `$action' is not public");
         }
 
-        return $controller->$action();
+        // Create a reference to controller into view
+        // TODO: This should be into a before_filter callback
+        View::set('controller', $kontroller);
+
+        // Return if not to render
+        if ($kontroller->$action() === false || View::wasRendered()) {
+            return;
+        }
+
+        // Set public vars of controller
+        // TODO: This should be into a after_filter callback
+        View::set($kontroller);
+
+        // Render the template
+        // TODO: This should be into a after_filter callback
+        echo View::render("$controller/$action", $kontroller->layout);
     }
 }
 
