@@ -20,31 +20,36 @@
  *
  * @package    Core
  * @subpackage UnitTests
+ * @category   Config
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  * @version    0.1
  */
 
-require_once 'TestHelper.php';
+require_once __DIR__ . '/../TestHelper.php';
 
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'AllTests::main');
-}
-
-class AllTests {
-    public static function suite () {
-        $suite = new PHPUnit_Framework_TestSuite('Core PHP');
-        $suite->addTest(Core\AllTests::suite());
-
-        return $suite;
+/**
+ * Config test class
+ *
+ * @package    Core
+ * @subpackage UnitTests
+ * @category   Config
+ * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
+ * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
+ */
+class ConfigTest extends PHPUnit_Framework_TestCase {
+    public function testParseApplicationFiles () {
+        Config::parseApplicationFiles();
+        $this->assertEquals('test', Config::get('application.environment'));
     }
 
-    public static function main () {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+    public function testSetAndGet () {
+        Config::set('foo.bar', 'foo');
+        $this->assertEquals('foo', Config::get('foo.bar'));
     }
-}
 
-if (PHPUnit_MAIN_METHOD == 'AllTests::main') {
-    AllTests::main();
+    public function testGetWithDefaultValue () {
+        $this->assertEquals('default', Config::get('foo.baz', 'default'));
+    }
 }
 

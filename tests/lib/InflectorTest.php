@@ -26,9 +26,7 @@
  * @version    0.1
  */
 
-namespace Core;
-
-require_once __DIR__ . '/../../TestHelper.php';
+require_once __DIR__ . '/../TestHelper.php';
 
 /**
  * Config test class
@@ -39,7 +37,7 @@ require_once __DIR__ . '/../../TestHelper.php';
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-class InflectorTest extends \PHPUnit_Framework_TestCase {
+class InflectorTest extends PHPUnit_Framework_TestCase {
     public function testPluralAndPluralize () {
         Inflector::plural('/$/', 's');
 
@@ -76,6 +74,8 @@ class InflectorTest extends \PHPUnit_Framework_TestCase {
     public function testFlush () {
         Inflector::flush();
 
+        $this->assertEquals('test', Inflector::pluralize('test'));
+        $this->assertEquals('tests', Inflector::singularize('tests'));
         $this->assertEquals('person', Inflector::pluralize('person'));
         $this->assertEquals('people', Inflector::singularize('people'));
     }

@@ -20,60 +20,41 @@
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   Controller
+ * @category   Router
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  * @version    0.1
  */
 
-namespace Core;
+namespace Controller;
 
 require_once __DIR__ . '/../../TestHelper.php';
 
 /**
- * Controller test class
+ * Router test class
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   Controller
+ * @category   Router
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-class ControllerTest extends \PHPUnit_Framework_TestCase {
-    /**
-     * @expectedException Core\Controller\Exception
-     */
-    public function testFactoryInexistentController () {
-        Controller::factory('inexistent');
+class RouterTest extends \PHPUnit_Framework_TestCase {
+    public function testConnect () {
+        $_SERVER['PATH_INFO'] = 'index';
+
+        Router::connect(':controller');
+        Router::dispatch();
     }
 
     /**
-     * @expectedException Core\Controller\Exception
+     * @expectedException Controller\Router\Exception
      */
-    public function testFactoryInvalidController () {
-        Controller::factory('invalid');
-    }
+    public function testDisconnect () {
+        $_SERVER['PATH_INFO'] = 'index';
 
-    public function testFactoryValidController () {
-        Controller::factory('index');
-    }
-
-    /**
-     * @expectedException Core\Controller\Exception
-     */
-    public function testDispatchInexistentAction () {
-        Controller::dispatch('index', 'inexistent');
-    }
-
-    /**
-     * @expectedException Core\Controller\Exception
-     */
-    public function testDispatchProtectedAction () {
-        Controller::dispatch('index', 'protected_action');
-    }
-
-    public function testDispatchPublicAction () {
-        $this->assertEquals('IndexController::index', Controller::dispatch('index', 'index'));
+        Router::disconnect(':controller');
+        Router::dispatch();
     }
 }
 

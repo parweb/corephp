@@ -20,37 +20,39 @@
  *
  * @package    Core
  * @subpackage UnitTests
+ * @category   ProceduralFunctions
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  * @version    0.1
  */
 
-namespace Core;
+require_once __DIR__ . '/../TestHelper.php';
 
-require_once __DIR__ . '/../../TestHelper.php';
-
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Core\AllTests::main');
-}
-
-class AllTests {
-    public static function suite () {
-        $suite = new \PHPUnit_Framework_TestSuite('Core PHP - Framework');
-
-        $suite->addTestSuite('Core\ProceduralFunctionsTest');
-        $suite->addTestSuite('Core\ConfigTest');
-        $suite->addTestSuite('Core\ControllerTest');
-        $suite->addTestSuite('Core\InflectorTest');
-
-        return $suite;
+/**
+ * Procedural functions test class
+ *
+ * @package    Core
+ * @subpackage UnitTests
+ * @category   ProceduralFunctions
+ * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
+ * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
+ */
+class ProceduralFunctionsTest extends PHPUnit_Framework_TestCase {
+    public function testAutoloadWithInvalidClassName () {
+        $this->assertFalse(__autoload('invalid class name'));
     }
 
-    public static function main () {
-        \PHPUnit_TextUI_TestRunner::run(self::suite());
-    }
-}
+    public function testAppendIncludePath () {
+        $original = get_include_path();
 
-if (PHPUnit_MAIN_METHOD == 'Core\AllTests::main') {
-    AllTests::main();
+        $this->assertEquals($original, append_include_path(__DIR__));
+        $this->assertEquals($original . PATH_SEPARATOR . __DIR__, get_include_path());
+
+        set_include_path($original);
+    }
+
+    public function testMbLcfirst () {
+        $this->assertEquals('çÇÇ', mb_lcfirst('ÇÇÇ', 'utf-8'));
+    }
 }
 

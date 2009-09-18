@@ -20,41 +20,58 @@
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   ProceduralFunctions
+ * @category   Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  * @version    0.1
  */
 
-namespace Core;
-
-require_once __DIR__ . '/../../TestHelper.php';
+require_once __DIR__ . '/../TestHelper.php';
 
 /**
- * Procedural functions test class
+ * Controller test class
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   ProceduralFunctions
+ * @category   Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-class ProceduralFunctionsTest extends \PHPUnit_Framework_TestCase {
-    public function testAutoloadWithInvalidClassName () {
-        $this->assertFalse(__autoload('invalid class name'));
+class ControllerTest extends PHPUnit_Framework_TestCase {
+    /**
+     * @expectedException Controller\Exception
+     */
+    public function testFactoryInexistentController () {
+        Controller::factory('inexistent');
     }
 
-    public function testAppendIncludePath () {
-        $original = get_include_path();
-
-        $this->assertEquals($original, append_include_path(__DIR__));
-        $this->assertEquals($original . PATH_SEPARATOR . __DIR__, get_include_path());
-
-        set_include_path($original);
+    /**
+     * @expectedException Controller\Exception
+     */
+    public function testFactoryInvalidController () {
+        Controller::factory('invalid');
     }
 
-    public function testMbLcfirst () {
-        $this->assertEquals('çÇÇ', mb_lcfirst('ÇÇÇ', 'utf-8'));
+    public function testFactoryValidController () {
+        Controller::factory('index');
+    }
+
+    /**
+     * @expectedException Controller\Exception
+     */
+    public function testDispatchInexistentAction () {
+        Controller::dispatch('index', 'inexistent');
+    }
+
+    /**
+     * @expectedException Controller\Exception
+     */
+    public function testDispatchProtectedAction () {
+        Controller::dispatch('index', 'protected_action');
+    }
+
+    public function testDispatchPublicAction () {
+        $this->assertEquals('IndexController::index', Controller::dispatch('index', 'index'));
     }
 }
 

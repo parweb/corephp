@@ -25,10 +25,6 @@
  * @version    0.1
  */
 
-namespace Core;
-
-use Core\Inflector;
-
 /**
  * Controller class
  *
@@ -72,7 +68,7 @@ abstract class Controller {
     public static function dispatch ($controller, $action) {
         $controller = self::factory($controller);
         $action = Inflector::camelize($action, true);
-        $reflection = new \ReflectionClass($controller);
+        $reflection = new ReflectionClass($controller);
 
         if (!$reflection->hasMethod($action)) {
             throw new Controller\Exception("Action `$action' not found");

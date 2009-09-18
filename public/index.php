@@ -32,7 +32,7 @@ error_reporting(E_ALL | E_STRICT);
 chdir(dirname(__DIR__));
 
 // Autoload
-require_once 'lib/Core/functions.php';
+require_once 'lib/functions.php';
 
 // Set include path
 $include_path = implode(PATH_SEPARATOR, array_map('realpath', array('lib', 'app/controllers')));
@@ -41,6 +41,6 @@ append_include_path($include_path);
 unset($include_path);
 
 // Boot and dispatch request
-Core\Core::boot();
-Core\Core::dispatch();
+Core::boot();
+Core::dispatch();
 

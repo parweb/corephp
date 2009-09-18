@@ -24,13 +24,12 @@
  * @version    0.1
  */
 
-use Core\Controller\Router;
+use Controller\Router;
 
 // Default routes
-Router::connect('/');
+Router::connect('/', array('controller' => 'home'));
 Router::connect(':controller');
 Router::connect(':controller/:action');
 Router::connect(':controller/:action.:type');
 Router::connect(':controller/:action/:id');
 Router::connect(':controller/:action/:id.:type');
-

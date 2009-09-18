@@ -19,42 +19,60 @@
  * along with Core PHP Framework. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package    Core
- * @subpackage UnitTests
- * @category   Router
+ * @subpackage Config
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  * @version    0.1
  */
 
-namespace Core\Controller;
-
-require_once __DIR__ . '/../../../TestHelper.php';
-
 /**
- * Router test class
+ * Config class
  *
  * @package    Core
- * @subpackage UnitTests
- * @category   Router
+ * @subpackage Config
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-class RouterTest extends \PHPUnit_Framework_TestCase {
-    public function testConnect () {
-        $_SERVER['PATH_INFO'] = 'index';
+abstract class Config {
+    /**
+     * Loaded configs
+     *
+     * @var array
+     */
+    protected static $configs = array();
 
-        Router::connect(':controller');
-        Router::dispatch();
+    /**
+     * Parse application config files
+     */
+    public static function parseApplicationFiles () {
+        foreach (new GlobIterator('app/config/*.ini', GlobIterator::CURRENT_AS_PATHNAME) as $file) {
+            self::$configs = array_merge(self::$configs, parse_ini_file($file));
+        }
     }
 
     /**
-     * @expectedException Core\Controller\Router\Exception
+     * Get a config value
+     *
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
      */
-    public function testDisconnect () {
-        $_SERVER['PATH_INFO'] = 'index';
+    public static function get ($key, $default = null) {
+        if (isset(self::$configs[$key])) {
+            return self::$configs[$key];
+        }
 
-        Router::disconnect(':controller');
-        Router::dispatch();
+        return $default;
+    }
+
+    /**
+     * Set a config value
+     *
+     * @param string $key
+     * @param mixed $value
+     */
+    public static function set ($key, $value) {
+        self::$configs[$key] = $value;
     }
 }
 

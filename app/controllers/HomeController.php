@@ -19,47 +19,36 @@
  * along with Core PHP Framework. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package    Core
- * @subpackage UnitTests
- * @category   Router
+ * @subpackage Application
+ * @category   Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  * @version    0.1
  */
 
-namespace Core\Controller\Router;
-
-require_once __DIR__ . '/../../../../TestHelper.php';
-
 /**
- * Controller router test class
+ * Home controller
  *
  * @package    Core
- * @subpackage UnitTests
- * @category   Router
+ * @subpackage Application
+ * @category   Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-class RouteTest extends \PHPUnit_Framework_TestCase {
-    protected $route;
+class HomeController extends ApplicationController {
+    public function index () {
+        $classes = array_reverse(get_declared_classes());
+        $own_classes = array();
 
-    protected function setUp () {
-        $this->route = new Route(':controller/:action.:type');
-    }
+        foreach ($classes as $class) {
+            array_unshift($own_classes, $class);
 
-    protected function tearDown () {
-        $this->route = null;
-    }
+            if ($class == 'Core') {
+                break;
+            }
+        }
 
-    public function testMatch () {
-        $options = $this->route->match('foo/bar.html');
-
-        $this->assertEquals('foo', $options['controller']);
-        $this->assertEquals('bar', $options['action']);
-        $this->assertEquals('html', $options['type']);
-    }
-
-    public function testInvalidRoute () {
-        $this->assertFalse($this->route->match('foo/bar.html/invalid'));
+        var_dump($own_classes);
     }
 }
 

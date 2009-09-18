@@ -35,6 +35,6 @@
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-abstract class ApplicationController extends Core\Controller {
+abstract class ApplicationController extends Controller {
 }
 

@@ -39,7 +39,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 PHPUnit_Util_Filter::addDirectoryToFilter(__DIR__);
 
 // Autoload
-require_once '../lib/Core/functions.php';
+require_once '../lib/functions.php';
 
 // Set include path
 $include_path = implode(PATH_SEPARATOR, array_map('realpath', array('lib', '../lib', 'app/controllers')));

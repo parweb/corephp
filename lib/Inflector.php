@@ -25,8 +25,6 @@
  * @version    0.1
  */
 
-namespace Core;
-
 /**
  * Inflector class
  *

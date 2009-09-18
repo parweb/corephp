@@ -26,7 +26,7 @@
  * @version    0.1
  */
 
-namespace Core\Controller;
+namespace Controller\Router;
 
 /**
  * Controller router class
@@ -37,53 +37,72 @@ namespace Core\Controller;
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-abstract class Router {
+class Route {
     /**
-     * Connected routes
+     * Pseudo constant for default options
      *
      * @var array
      */
-    protected static $routes = array();
+    protected static $DEFAULT_OPTIONS = array(
+    	'controller' => 'index',
+    	'action'     => 'index',
+    	'type'       => 'html'
+    );
 
     /**
-     * Connect a route
+     * URL
+     *
+     * @var string
+     */
+    protected $url;
+
+    /**
+     * Route options
+     *
+     * @var array
+     */
+    protected $options;
+
+    /**
+     * Compiled regex
+     *
+     * @var string
+     */
+    protected $regex;
+
+    /**
+     * Set $url and $options
      *
      * @param string $url
      * @param array $options
      */
-    public static function connect ($url, array $options = array ()) {
-        self::$routes[$url] = new Router\Route($url, $options);
+    public function __construct ($url, array $options = array ()) {
+        $this->url = $url;
+        $this->options = array_merge(self::$DEFAULT_OPTIONS, $options);
     }
 
     /**
-     * Disconnect a route
+     * Route match with $uri?
      *
-     * @param string $url
+     * @param string $uri
+     * @return array or false
      */
-    public static function disconnect ($url) {
-        unset(self::$routes[$url]);
+    public function match ($uri) {
+        $this->regex or $this->makeRegex();
+
+        if (preg_match($this->regex, $uri, $options)) {
+            return array_merge($this->options, $options);
+        }
+
+        return false;
     }
 
     /**
-     * Dispatch request
+     * Make route regex
      */
-    public static function dispatch () {
-        // Parse route
-        $uri = isset($_SERVER['PATH_INFO']) ? trim($_SERVER['PATH_INFO'], '/') : '/';
-        $options = null;
-
-        foreach (self::$routes as $route) {
-            if ($options = $route->match($uri)) {
-                break;
-            }
-        }
-
-        if (!$options) {
-            throw new Router\Exception('No route matches');
-        }
-
-        // Dispatch
-        \Core\Controller::dispatch($options['controller'], $options['action']);
+    protected function makeRegex () {
+        $url = preg_replace('/\\\:([a-zA-Z\d_]+)/', '(?<\1>[a-zA-Z\d_]+)', preg_quote($this->url, '/'));
+        $this->regex = '/^' . $url . '$/';
     }
 }
 
