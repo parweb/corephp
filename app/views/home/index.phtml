@@ -1,8 +1,4 @@
 <h1>Loaded classes</h1>
 
-<ol>
-  <?php foreach ($classes as $class): ?>
-    <li><?= $class ?></li>
-  <?php endforeach; ?>
-</ol>
+<?= HomeHelper::ol($classes); ?>
 

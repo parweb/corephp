@@ -33,7 +33,7 @@
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-abstract class Controller {
+abstract class Controller extends Observer {
     /**
      * Layout
      *
@@ -74,7 +74,7 @@ abstract class Controller {
     public static function dispatch ($controller, $action) {
         // Dispatch action to controller
         $kontroller = self::factory($controller);
-        $action = Inflector::camelize($action, true);
+        $action     = Inflector::camelize($action, true);
         $reflection = new ReflectionClass($kontroller);
 
         if (!$reflection->hasMethod($action)) {
@@ -85,22 +85,21 @@ abstract class Controller {
             throw new Controller\Exception("Action `$action' is not public");
         }
 
-        // Create a reference to controller into view
-        // TODO: This should be into a before_filter callback
-        View::set('controller', $kontroller);
+        // Render if needed
+        $kontroller->notify('before_filter', array($kontroller));
 
-        // Return if not to render
-        if ($kontroller->$action() === false || View::wasRendered()) {
-            return;
+        if ($kontroller->$action() !== false && !View::wasRendered()) {
+            // Create a controller reference
+            View::set('controller', $kontroller);
+
+            // Copy public vars
+            View::set($kontroller);
+
+            // Render the template
+            View::render("$controller/$action", $kontroller->layout);
         }
 
-        // Set public vars of controller
-        // TODO: This should be into a after_filter callback
-        View::set($kontroller);
-
-        // Render the template
-        // TODO: This should be into a after_filter callback
-        echo View::render("$controller/$action", $kontroller->layout);
+        $kontroller->notify('after_filter', array($kontroller));
     }
 }
 

@@ -33,7 +33,7 @@
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-abstract class View  {
+abstract class View {
     /**
      * View vars
      *
@@ -77,7 +77,6 @@ abstract class View  {
      *
      * @param string $__template
      * @param string $__layout
-     * @return string
      */
     public static function render ($__template, $__layout = null) {
         // Once render per request
@@ -120,7 +119,7 @@ abstract class View  {
             $yield = ob_get_clean();
         }
 
-        return $yield;
+        echo $yield;
     }
 
     /**

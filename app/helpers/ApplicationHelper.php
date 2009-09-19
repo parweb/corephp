@@ -20,35 +20,21 @@
  *
  * @package    Core
  * @subpackage Application
- * @category   Controller
+ * @category   Helper
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  * @version    0.1
  */
 
 /**
- * Home controller
+ * Application helper class
  *
  * @package    Core
  * @subpackage Application
- * @category   Controller
+ * @category   Helper
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-class HomeController extends ApplicationController {
-    public function index () {
-        $classes = array_reverse(get_declared_classes());
-        $own_classes = array();
-
-        foreach ($classes as $class) {
-            array_unshift($own_classes, $class);
-
-            if ($class == 'Core') {
-                break;
-            }
-        }
-
-        $this->classes = $own_classes;
-    }
+abstract class ApplicationHelper {
 }
 
