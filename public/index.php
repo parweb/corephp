@@ -32,6 +32,7 @@ error_reporting(E_ALL | E_STRICT);
 chdir(dirname(__DIR__));
 
 // Autoload
+require_once 'lib/inflector.php';
 require_once 'lib/functions.php';
 
 // Set include path

@@ -37,29 +37,31 @@ abstract class Observer {
      *
      * @var array
      */
-    protected $observers = array ();
+    protected static $observers = array ();
 
     /**
      * Attach a observer
      *
-     * @param string event
+     * @param string $event
      * @param callback $observer
      */
-    protected function attach ($event, $observer) {
-        $this->observers[$event][] = $observer;
+    public static function attach ($event, $observer) {
+        self::$observers[get_called_class()][$event][] = $observer;
     }
 
     /**
      * Deattach a observer
      *
-     * @param string event
+     * @param string $event
      * @param callback $observer
      */
-    protected function deattach ($event, $observer) {
-        if (isset($this->observers[$event])) {
-            foreach ($this->observers[$event] as $key => $value) {
+    public static function deattach ($event, $observer) {
+        $class = get_called_class();
+
+        if (isset(self::$observers[$class][$event])) {
+            foreach (self::$observers[$class][$event] as $key => $value) {
                 if ($observer === $value) {
-                    unset($this->observers[$event][$key]);
+                    unset(self::$observers[$class][$event][$key]);
                     break;
                 }
             }
@@ -69,12 +71,14 @@ abstract class Observer {
     /**
      * Notify all observers about a event
      *
-     * @var string $event
-     * @var array $args Arguments passed to callbacks
+     * @param string $event
+     * @param array $args Arguments passed to callbacks
      */
-    protected function notify ($event, array $args = array ()) {
-        if (isset($this->observers[$event])) {
-            foreach ($this->observers[$event] as $observer) {
+    public static function notify ($event, array $args = array ()) {
+        $class = get_called_class();
+
+        if (isset(self::$observers[$class][$event])) {
+            foreach (self::$observers[$class][$event] as $observer) {
                 call_user_func_array($observer, $args);
             }
         }
@@ -86,8 +90,8 @@ abstract class Observer {
      * @param string $event
      * @param callback $observer
      */
-    protected function before ($event, $observer) {
-        $this->attach("before_$event", $observer);
+    public static function before ($event, $observer) {
+        self::attach("before_$event", $observer);
     }
 
     /**
@@ -96,8 +100,8 @@ abstract class Observer {
      * @param string $event
      * @param callback $observer
      */
-    protected function after ($event, $observer) {
-        $this->attach("after_$event", $observer);
+    public static function after ($event, $observer) {
+        self::attach("after_$event", $observer);
     }
 
     /**
@@ -106,9 +110,9 @@ abstract class Observer {
      * @param string $event
      * @param callback $observer
      */
-    protected function around ($event, $observer) {
-        $this->before($event, $observer);
-        $this->after($event, $observer);
+    public static function around ($event, $observer) {
+        self::before($event, $observer);
+        self::after($event, $observer);
     }
 }
 

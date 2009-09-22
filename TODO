@@ -1,0 +1,24 @@
+====
+TODO
+====
+
+Request class to get info about current request
+Request::referer() to given the referer
+
+Discover the template when call View::render() - The logic should be into view class
+
+Request format type like JSON, XML, RSS
+
+Redirect URL - Maybe Request::redirect()
+Flash class
+Generate URLs with a helper
+
+
+=====
+Maybe
+=====
+
+Lighttpd Configuration - Use mod_magnetic?
+How routes arguments will be passed to controller?
+Cookie class?
+

@@ -54,5 +54,13 @@ class ProceduralFunctionsTest extends PHPUnit_Framework_TestCase {
     public function testMbLcfirst () {
         $this->assertEquals('çÇÇ', mb_lcfirst('ÇÇÇ', 'utf-8'));
     }
+
+    public function testParam () {
+        $_REQUEST['foo'] = 'foo';
+        $this->assertEquals('foo', param('foo'));
+
+        unset($_REQUEST['foo']);
+        $this->assertEquals('bar', param('foo', 'bar'));
+    }
 }
 

@@ -43,12 +43,13 @@ class HomeController extends ApplicationController {
         foreach ($classes as $class) {
             array_unshift($own_classes, $class);
 
-            if ($class == 'Core') {
+            if ($class == 'Inflector') {
                 break;
             }
         }
 
         $this->classes = $own_classes;
+        $this->files = get_included_files();
     }
 }
 

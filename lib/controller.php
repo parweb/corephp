@@ -74,6 +74,7 @@ abstract class Controller extends Observer {
     public static function dispatch ($controller, $action) {
         // Dispatch action to controller
         $kontroller = self::factory($controller);
+        $klass      = get_class($kontroller);
         $action     = Inflector::camelize($action, true);
         $reflection = new ReflectionClass($kontroller);
 
@@ -86,7 +87,7 @@ abstract class Controller extends Observer {
         }
 
         // Render if needed
-        $kontroller->notify('before_filter', array($kontroller));
+        $klass::notify('before_filter', array($kontroller));
 
         if ($kontroller->$action() !== false && !View::wasRendered()) {
             // Create a controller reference
@@ -99,7 +100,7 @@ abstract class Controller extends Observer {
             View::render("$controller/$action", $kontroller->layout);
         }
 
-        $kontroller->notify('after_filter', array($kontroller));
+        $klass::notify('after_filter', array($kontroller));
     }
 }
 

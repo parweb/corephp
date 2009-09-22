@@ -42,6 +42,7 @@ function __autoload ($class) {
     }
 
     $file = str_replace(NAMESPACE_SEPARATOR, DIRECTORY_SEPARATOR, $class) . '.php';
+    $file = Inflector::underscore($file);
     $fh = @fopen($file, 'r', true);
 
     if ($fh) {
@@ -74,5 +75,16 @@ function mb_lcfirst ($word, $encoding = null) {
 
     return mb_strtolower(mb_substr($word, 0, 1, $encoding), $encoding)
          . mb_substr($word, 1, mb_strlen($word, $encoding) - 1, $encoding);
+}
+
+/**
+ * Get a $_REQUEST value or the $default
+ *
+ * @param string $key
+ * @param mixed $default
+ * @return mixed
+ */
+function param ($key, $default = null) {
+    return isset($_REQUEST[$key]) ? $_REQUEST[$key] : $default;
 }
 
