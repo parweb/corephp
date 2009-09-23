@@ -36,10 +36,10 @@ require_once 'lib/inflector.php';
 require_once 'lib/functions.php';
 
 // Set include path
-$include_path = getcwd();
-append_include_path("$include_path/lib", "$include_path/app/controllers", "$include_path/app/helpers");
+$cwd = getcwd();
+append_include_path("$cwd/lib", "$cwd/app/controllers", "$cwd/app/helpers");
 
-unset($include_path);
+unset($cwd);
 
 // Boot and dispatch request
 Core::boot();
