@@ -39,32 +39,22 @@ require_once __DIR__ . '/../TestHelper.php';
  */
 class InflectorTest extends PHPUnit_Framework_TestCase {
     public function testPluralAndPluralize () {
-        Inflector::plural('/$/', 's');
-
         $this->assertEquals('tests', Inflector::pluralize('test'));
     }
 
     public function testSingularAndSingularize () {
-        Inflector::singular('/s$/', '');
-
         $this->assertEquals('test', Inflector::singularize('tests'));
     }
 
     public function testUncountable () {
-        Inflector::uncountable('equipment');
-
         $this->assertEquals('equipment', Inflector::pluralize('equipment'));
         $this->assertEquals('equipment', Inflector::singularize('equipment'));
-
-        Inflector::uncountable('fish');
 
         $this->assertEquals('fish', Inflector::pluralize('fish'));
         $this->assertEquals('fish', Inflector::singularize('fish'));
     }
 
     public function testIrregular () {
-        Inflector::irregular('person', 'people');
-
         $this->assertEquals('person', Inflector::singularize('person'));
         $this->assertEquals('person', Inflector::singularize('people'));
         $this->assertEquals('people', Inflector::pluralize('person'));
@@ -90,6 +80,13 @@ class InflectorTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('foo', Inflector::underscore('Foo'));
         $this->assertEquals('foo_bar', Inflector::underscore('FooBar'));
         $this->assertEquals('foo/bar_baz', Inflector::underscore('foo\BarBaz'));
+    }
+
+    public function testSlug () {
+        $this->assertEquals("johns", Inflector::slug('John\'s', 'utf-8'));
+        $this->assertEquals('aeuoi-iaiecao-naon', Inflector::slug('ãéüöí ìàíèção nãoñ', 'utf-8'));
+        $this->assertEquals('i-can-use-amp-and-atilde', Inflector::slug('I can use &amp; and &atilde;', 'utf-8'));
+        $this->assertEquals('pound-double-quote-asterisk', Inflector::slug('£ pound " double quote * asterisk ', 'utf-8'));
     }
 }
 

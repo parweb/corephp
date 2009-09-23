@@ -39,6 +39,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 PHPUnit_Util_Filter::addDirectoryToFilter(__DIR__);
 
 // Autoload
+require_once '../lib/inflector.php';
 require_once '../lib/functions.php';
 
 // Set include path
