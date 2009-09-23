@@ -33,7 +33,7 @@
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
  */
-abstract class Controller extends Observer {
+abstract class Controller {
     /**
      * Layout
      *
@@ -74,7 +74,6 @@ abstract class Controller extends Observer {
     public static function dispatch ($controller, $action) {
         // Dispatch action to controller
         $kontroller = self::factory($controller);
-        $klass      = get_class($kontroller);
         $action     = Inflector::camelize($action, true);
         $reflection = new ReflectionClass($kontroller);
 
@@ -87,7 +86,7 @@ abstract class Controller extends Observer {
         }
 
         // Render if needed
-        $klass::notify('before_filter', array($kontroller));
+        $kontroller->beforeFilter();
 
         if ($kontroller->$action() !== false && !View::wasRendered()) {
             // Create a controller reference
@@ -100,7 +99,19 @@ abstract class Controller extends Observer {
             View::render("$controller/$action", $kontroller->layout);
         }
 
-        $klass::notify('after_filter', array($kontroller));
+        $kontroller->afterFilter();
+    }
+
+    /**
+     * Method called before filter
+     */
+    protected function beforeFilter () {
+    }
+
+    /**
+     * Method called after filter
+     */
+    protected function afterFilter () {
     }
 }
 
