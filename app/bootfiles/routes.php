@@ -12,15 +12,17 @@
  *
  * Core PHP Framework is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with Core PHP Framework. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package    Core
+ * @subpackage Application
+ * @category   Routes
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
- * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
+ * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  * @version    0.1
  */
 
@@ -33,3 +35,4 @@ Router::connect(':controller/:action');
 Router::connect(':controller/:action.:type');
 Router::connect(':controller/:action/:id');
 Router::connect(':controller/:action/:id.:type');
+

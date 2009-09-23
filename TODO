@@ -22,3 +22,10 @@ Lighttpd Configuration - Use mod_magnetic?
 How routes arguments will be passed to controller?
 Cookie class?
 
+
+=====
+Tests
+=====
+
+I need to write more tests
+

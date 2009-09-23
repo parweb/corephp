@@ -22,7 +22,7 @@
  * @subpackage UnitTests
  * @category   Config
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
- * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
+ * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  * @version    0.1
  */
 
@@ -35,7 +35,7 @@ require_once __DIR__ . '/../TestHelper.php';
  * @subpackage UnitTests
  * @category   Config
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
- * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (GPLv3)
+ * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
 class ConfigTest extends PHPUnit_Framework_TestCase {
     public function testParseApplicationFiles () {
