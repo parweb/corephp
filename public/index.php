@@ -36,8 +36,8 @@ require_once 'lib/inflector.php';
 require_once 'lib/functions.php';
 
 // Set include path
-$include_path = implode(PATH_SEPARATOR, array_map('realpath', array('lib', 'app/controllers', 'app/helpers')));
-append_include_path($include_path);
+$include_path = getcwd();
+append_include_path("$include_path/lib", "$include_path/app/controllers", "$include_path/app/helpers");
 
 unset($include_path);
 

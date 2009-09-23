@@ -52,13 +52,15 @@ function __autoload ($class) {
 }
 
 /**
- * Append $path to include_path
+ * Append paths to include_path
  *
  * @param string $path
+ * @param string $...
  * @return string the old include_path on success or false on failure
  */
 function append_include_path ($path) {
-    return set_include_path(get_include_path() . PATH_SEPARATOR . $path);
+    $paths = implode(PATH_SEPARATOR, func_get_args());
+    return set_include_path(get_include_path() . PATH_SEPARATOR . $paths);
 }
 
 /**
@@ -78,7 +80,7 @@ function mb_lcfirst ($word, $encoding = null) {
 }
 
 /**
- * Get a $_REQUEST value or the $default
+ * Get a $_REQUEST value or the $default if not set
  *
  * @param string $key
  * @param mixed $default
