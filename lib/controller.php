@@ -89,14 +89,7 @@ abstract class Controller {
         $kontroller->beforeFilter();
 
         if ($kontroller->$action() !== false && !View::wasRendered()) {
-            // Create a controller reference
-            View::set('controller', $kontroller);
-
-            // Copy public vars
-            View::set($kontroller);
-
-            // Render the template
-            View::render("$controller/$action", $kontroller->layout);
+            $kontroller->render();
         }
 
         $kontroller->afterFilter();
@@ -112,6 +105,27 @@ abstract class Controller {
      * Method called after filter
      */
     protected function afterFilter () {
+    }
+
+    /**
+     * Render template
+     *
+     * @param string $template
+     * @param string $layout
+     */
+    protected function render ($template = null, $layout = null) {
+        View::set('controller', $this);
+        View::set($this);
+
+        if (!$template) {
+            $template = implode('/', array(param('controller'), param('action')));
+        }
+
+        if (is_null($layout)) {
+            $layout = $this->layout;
+        }
+
+        View::render($template, $layout);
     }
 }
 

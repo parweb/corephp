@@ -50,6 +50,7 @@ abstract class Router {
      * @param array $options
      */
     public static function connect ($url, array $options = array ()) {
+        $url = trim($url, '/');
         self::$routes[$url] = new Router\Route($url, $options);
     }
 
@@ -66,8 +67,7 @@ abstract class Router {
      * Dispatch request
      */
     public static function dispatch () {
-        // Parse route
-        $uri = isset($_SERVER['PATH_INFO']) ? trim($_SERVER['PATH_INFO'], '/') : '/';
+        $uri = isset($_SERVER['PATH_INFO']) ? trim($_SERVER['PATH_INFO'], '/') : '';
         $options = null;
 
         foreach (self::$routes as $route) {
@@ -80,7 +80,10 @@ abstract class Router {
             throw new Router\Exception('No route matches');
         }
 
-        // Dispatch
+        foreach ($options as $param => $value) {
+            $_REQUEST[$param] = $value;
+        }
+
         \Controller::dispatch($options['controller'], $options['action']);
     }
 }

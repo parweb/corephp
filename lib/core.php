@@ -42,19 +42,19 @@ abstract class Core {
     }
 
     /**
-     * Load application boot files
+     * Load vendor plugins
      */
-    protected static function loadBootFiles () {
-        foreach (new GlobIterator('app/bootfiles/*.php', GlobIterator::CURRENT_AS_PATHNAME) as $file) {
+    protected static function loadVendorPlugins () {
+        foreach (new GlobIterator('vendor/plugins/*/init.php', GlobIterator::CURRENT_AS_PATHNAME) as $file) {
             require $file;
         }
     }
 
     /**
-     * Load vendor plugins
+     * Load application boot files
      */
-    protected static function loadVendorPlugins () {
-        foreach (new GlobIterator('vendor/plugins/*/init.php', GlobIterator::CURRENT_AS_PATHNAME) as $file) {
+    protected static function loadBootFiles () {
+        foreach (new GlobIterator('app/bootfiles/*.php', GlobIterator::CURRENT_AS_PATHNAME) as $file) {
             require $file;
         }
     }

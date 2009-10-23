@@ -258,6 +258,7 @@ abstract class Inflector {
      * will be 'aeuoi-iaiecao-naon'
      *
      * @param string $word
+     * @param string $delimiter
      * @return string
      */
     public static function slug ($word, $delimiter = '-')

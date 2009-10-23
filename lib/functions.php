@@ -60,6 +60,7 @@ function __autoload ($class) {
  */
 function append_include_path ($path) {
     $paths = implode(PATH_SEPARATOR, func_get_args());
+
     return set_include_path(get_include_path() . PATH_SEPARATOR . $paths);
 }
 

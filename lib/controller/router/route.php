@@ -44,7 +44,7 @@ class Route {
      * @var array
      */
     protected static $DEFAULT_OPTIONS = array(
-    	'controller' => 'index',
+    	'controller' => 'home',
     	'action'     => 'index',
     	'type'       => 'html'
     );
@@ -101,7 +101,7 @@ class Route {
      * Make route regex
      */
     protected function makeRegex () {
-        $url = preg_replace('/\\\:([a-zA-Z\d_]+)/', '(?<\1>[a-zA-Z\d_]+)', preg_quote($this->url, '/'));
+        $url = preg_replace('/\\\:([a-z\d_]+)/i', '(?<\1>[a-zA-Z\d_]+)', preg_quote($this->url, '/'));
         $this->regex = '/^' . $url . '$/';
     }
 }
