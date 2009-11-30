@@ -42,11 +42,36 @@ abstract class Controller {
     protected $layout = null;
 
     /**
+     * Request
+     *
+     * @var Controller\Request
+     */
+    private $request = null;
+
+    /**
+     * Perfomed?
+     *
+     * @var boolean
+     */
+    private $perfomed = false;
+
+    /**
+     * Get request instance
+     */
+    public function getRequest () {
+        if (!$this->request instanceof Controller\Request) {
+            $this->request = new Controller\Request;
+        }
+
+        return $this->request;
+    }
+
+    /**
      * Factory the controller
      *
      * @param string $controller controller name without 'Controller' at the end
      * @return Controller
-     * @throws Controller\Exception when controller not found
+     * @throws Controller\Exception when $controller not found
      * @throws Controller\Exception when $controller is not a controller
      */
     public static function factory ($controller) {
@@ -86,25 +111,25 @@ abstract class Controller {
         }
 
         // Render if needed
-        $kontroller->beforeFilter();
+        $kontroller->beforeAction();
 
-        if ($kontroller->$action() !== false && !View::wasRendered()) {
+        if ($kontroller->$action() !== false && !$kontroller->perfomed) {
             $kontroller->render();
         }
 
-        $kontroller->afterFilter();
+        $kontroller->afterAction();
     }
 
     /**
-     * Method called before filter
+     * Method called before action
      */
-    protected function beforeFilter () {
+    protected function beforeAction () {
     }
 
     /**
-     * Method called after filter
+     * Method called after action
      */
-    protected function afterFilter () {
+    protected function afterAction () {
     }
 
     /**
@@ -114,18 +139,27 @@ abstract class Controller {
      * @param string $layout
      */
     protected function render ($template = null, $layout = null) {
-        View::set('controller', $this);
-        View::set($this);
+        if ($this->perfomed) {
+            throw new Controller\DoubleRenderException('Can only render or redirect once per action');
+        }
+
+        $this->perfomed = true;
 
         if (!$template) {
-            $template = implode('/', array(param('controller'), param('action')));
+            $template = param('controller') . '/' . param('action');
+        } else if (strpos('/', $template) === false) {
+            $template = param('controller') . '/' . $template;
         }
 
         if (is_null($layout)) {
             $layout = $this->layout;
         }
 
-        View::render($template, $layout);
+        $view = new View($template, $layout);
+        $view->set('controller', $this);
+        $view->set($this);
+
+        echo $view->render();
     }
 }
 

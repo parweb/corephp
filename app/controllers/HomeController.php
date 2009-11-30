@@ -20,21 +20,24 @@
  *
  * @package    Core
  * @subpackage Application
- * @category   Helpers
+ * @category   Controllers
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  * @version    0.1
  */
 
 /**
- * Application helper class
+ * Home controller
  *
  * @package    Core
  * @subpackage Application
- * @category   Helpers
+ * @category   Controllers
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
-abstract class ApplicationHelper {
+class HomeController extends ApplicationController {
+    public function index () {
+        var_dump($this);
+    }
 }
 

@@ -37,12 +37,11 @@ const NAMESPACE_SEPARATOR = '\\';
  * @param string $class
  */
 function __autoload ($class) {
-    if (!preg_match('/^[\\\a-z\d_]+$/i', $class)) {
+    if (preg_match('/[^\\\a-z\d_]/i', $class)) {
         return false;
     }
 
     $file = str_replace(NAMESPACE_SEPARATOR, DIRECTORY_SEPARATOR, $class) . '.php';
-    $file = Inflector::underscore($file);
     $fh = @fopen($file, 'r', true);
 
     if ($fh) {

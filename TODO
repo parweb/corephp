@@ -2,10 +2,7 @@
 TODO
 ====
 
-Request class to get info about current request
 Request::referer() to given the referer
-
-Discover the template when call View::render() - The logic should be into view class
 
 Request format type like JSON, XML, RSS
 

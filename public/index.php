@@ -32,12 +32,11 @@ error_reporting(E_ALL | E_STRICT);
 chdir(dirname(__DIR__));
 
 // Autoload
-require_once 'lib/inflector.php';
 require_once 'lib/functions.php';
 
 // Set include path
 $cwd = getcwd();
-append_include_path("$cwd/lib", "$cwd/app/controllers", "$cwd/app/helpers");
+append_include_path("$cwd/lib", "$cwd/app/models", "$cwd/app/controllers", "$cwd/app/helpers");
 
 unset($cwd);
 
