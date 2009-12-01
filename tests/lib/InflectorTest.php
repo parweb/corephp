@@ -98,7 +98,7 @@ class InflectorTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testSlug () {
-        $this->assertEquals('jonhs', Inflector::slug("Jonh's"));
+        $this->assertEquals('johns', Inflector::slug("John's"));
         $this->assertEquals('aeuoi-iaiecao-naon', Inflector::slug('ãéüöí ìàíèção nãoñ'));
         $this->assertEquals('i-can-use-amp-and-atilde', Inflector::slug('I can use &amp; and &atilde;'));
         $this->assertEquals('pound-double-quote-asterisk', Inflector::slug('£ pound " double quote * asterisk '));
