@@ -20,44 +20,34 @@
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   Router
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  * @version    0.1
  */
 
-namespace Controller;
+// Buffer and error reporting
+ob_start();
+error_reporting(E_ALL | E_STRICT);
 
-/**
- * @see test_helper.php
- */
-require_once __DIR__ . '/../../test_helper.php';
+// Go to framework test dir
+chdir(__DIR__);
 
-/**
- * Router tests
- *
- * @package    Core
- * @subpackage UnitTests
- * @category   Router
- * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
- * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
- */
-class RouterTest extends \PHPUnit_Framework_TestCase {
-    protected function setUp () {
-        $_SERVER['PATH_INFO'] = 'home';
-    }
+// PHPUnit
+require_once 'PHPUnit/Framework.php';
+require_once 'PHPUnit/TextUI/TestRunner.php';
 
-    public function testConnect () {
-        Router::connect(':controller');
-        Router::dispatch();
-    }
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
+PHPUnit_Util_Filter::addDirectoryToFilter('app');
 
-    /**
-     * @expectedException Controller\Router\Exception
-     */
-    public function testDisconnect () {
-        Router::disconnect(':controller');
-        Router::dispatch();
-    }
-}
+// Autoload
+require_once '../lib/functions.php';
+
+// Set include path
+$cwd = getcwd();
+append_include_path("$cwd/lib", "$cwd/../lib", "$cwd/app/models", "$cwd/app/controllers", "$cwd/app/helpers");
+
+unset($cwd);
+
+// Boot framework
+Core::boot();
 

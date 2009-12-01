@@ -40,9 +40,5 @@ class InvalidController
     public function index () {
         return __METHOD__;
     }
-
-    protected function protectedAction () {
-        return __METHOD__;
-    }
 }
 

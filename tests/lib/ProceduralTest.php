@@ -20,35 +20,39 @@
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   ProceduralFunctions
+ * @category   Procedural
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  * @version    0.1
  */
 
-require_once __DIR__ . '/../TestHelper.php';
+/**
+ * @see test_helper.php
+ */
+require_once __DIR__ . '/../test_helper.php';
 
 /**
- * Procedural functions test class
+ * Procedural tests
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   ProceduralFunctions
+ * @category   Procedural
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
-class ProceduralFunctionsTest extends PHPUnit_Framework_TestCase {
+class ProceduralTest extends PHPUnit_Framework_TestCase {
     public function testAutoloadWithInvalidClassName () {
         $this->assertFalse(__autoload('invalid class name'));
     }
 
     public function testAppendIncludePath () {
-        $original = get_include_path();
+        $before = get_include_path();
+        $after = get_include_path() . PATH_SEPARATOR . __DIR__;
 
-        $this->assertEquals($original, append_include_path(__DIR__));
-        $this->assertEquals($original . PATH_SEPARATOR . __DIR__, get_include_path());
+        $this->assertEquals($before, append_include_path(__DIR__));
+        $this->assertEquals($after, get_include_path());
 
-        set_include_path($original);
+        set_include_path($before);
     }
 
     public function testMbLcfirst () {
@@ -56,11 +60,12 @@ class ProceduralFunctionsTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testParam () {
-        $_REQUEST['foo'] = 'foo';
-        $this->assertEquals('foo', param('foo'));
+        $_REQUEST['user_id'] = 1;
+        $this->assertEquals(1, param('user_id'));
+    }
 
-        unset($_REQUEST['foo']);
-        $this->assertEquals('bar', param('foo', 'bar'));
+    public function testParamWithDefaultValue () {
+        $this->assertEquals(0, param('user_id', 0));
     }
 }
 

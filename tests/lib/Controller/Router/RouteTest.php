@@ -28,10 +28,13 @@
 
 namespace Controller\Router;
 
-require_once __DIR__ . '/../../../TestHelper.php';
+/**
+ * @see test_helper.php
+ */
+require_once __DIR__ . '/../../../test_helper.php';
 
 /**
- * Controller router test class
+ * Route tests
  *
  * @package    Core
  * @subpackage UnitTests
@@ -40,26 +43,24 @@ require_once __DIR__ . '/../../../TestHelper.php';
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
 class RouteTest extends \PHPUnit_Framework_TestCase {
-    protected $route;
-
     protected function setUp () {
         $this->route = new Route(':controller/:action.:type');
     }
 
     protected function tearDown () {
-        $this->route = null;
+        unset($this->route);
     }
 
     public function testMatch () {
-        $options = $this->route->match('foo/bar.html');
+        $match = $this->route->match('users/list.xml');
 
-        $this->assertEquals('foo', $options['controller']);
-        $this->assertEquals('bar', $options['action']);
-        $this->assertEquals('html', $options['type']);
+        $this->assertEquals('users', $match['controller']);
+        $this->assertEquals('list', $match['action']);
+        $this->assertEquals('xml', $match['type']);
     }
 
     public function testInvalidRoute () {
-        $this->assertFalse($this->route->match('foo/bar.html/invalid'));
+        $this->assertFalse($this->route->match('users/list.xml fail'));
     }
 }
 

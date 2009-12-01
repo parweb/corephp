@@ -20,41 +20,39 @@
  *
  * @package    Core
  * @subpackage UnitTests
+ * @category   Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  * @version    0.1
  */
 
-// Buffer and error reporting
-ob_start();
-error_reporting(E_ALL | E_STRICT);
+namespace Controller;
 
-// Go to framework test dir
-chdir(__DIR__);
+/**
+ * @see test_helper.php
+ */
+require_once __DIR__ . '/../../test_helper.php';
 
 // PHPUnit
-require_once 'PHPUnit/Framework.php';
-require_once 'PHPUnit/TextUI/TestRunner.php';
+\PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
-PHPUnit_Util_Filter::addDirectoryToFilter(__DIR__);
+/**
+ * Controller suite
+ *
+ * @package    Core
+ * @subpackage UnitTests
+ * @category   Controller
+ * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
+ * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
+ */
+class AllTests {
+    public static function suite () {
+        $suite = new \PHPUnit_Framework_TestSuite('Controller');
 
-// Autoload
-require_once '../lib/functions.php';
+        $suite->addTest(Router\AllTests::suite());
+        $suite->addTestSuite('Controller\\RequestTest');
+        $suite->addTestSuite('Controller\\RouterTest');
 
-// Set include path
-/*$cwd = getcwd();
-append_include_path("$cwd/lib", "$cwd/../lib", "$cwd/app/models", "$cwd/app/controllers", "$cwd/app/helpers");
-
-unset($cwd);
-
-var_dump(explode(PATH_SEPARATOR, get_include_path()));*/
-
-// Set include path
-$include_path = implode(PATH_SEPARATOR, array_map('realpath', array('lib', '../lib', 'app/controllers')));
-append_include_path($include_path);
-
-unset($include_path);
-
-// Boot framework
-Core::boot();
-
+        return $suite;
+    }
+}

@@ -19,45 +19,34 @@
  * along with Core PHP Framework. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package    Core
- * @subpackage UnitTests
- * @category   Router
+ * @subpackage Application
+ * @category   Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  * @version    0.1
  */
 
-namespace Controller;
-
 /**
- * @see test_helper.php
- */
-require_once __DIR__ . '/../../test_helper.php';
-
-/**
- * Router tests
+ * Home controller
  *
  * @package    Core
- * @subpackage UnitTests
- * @category   Router
+ * @subpackage Application
+ * @category   Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
-class RouterTest extends \PHPUnit_Framework_TestCase {
-    protected function setUp () {
-        $_SERVER['PATH_INFO'] = 'home';
+class HomeController extends ApplicationController
+{
+    public function index () {
+        $this->action = __METHOD__;
     }
 
-    public function testConnect () {
-        Router::connect(':controller');
-        Router::dispatch();
+    protected function beforeAction () {
+        $this->before = true;
     }
 
-    /**
-     * @expectedException Controller\Router\Exception
-     */
-    public function testDisconnect () {
-        Router::disconnect(':controller');
-        Router::dispatch();
+    protected function afterAction () {
+        $this->after = true;
     }
 }
 

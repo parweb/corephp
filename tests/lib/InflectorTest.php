@@ -26,10 +26,13 @@
  * @version    0.1
  */
 
-require_once __DIR__ . '/../TestHelper.php';
+/**
+ * @see test_helper.php
+ */
+require_once __DIR__ . '/../test_helper.php';
 
 /**
- * Config test class
+ * Inflector tests
  *
  * @package    Core
  * @subpackage UnitTests
@@ -38,23 +41,36 @@ require_once __DIR__ . '/../TestHelper.php';
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
 class InflectorTest extends PHPUnit_Framework_TestCase {
-    public function testPluralAndPluralize () {
-        $this->assertEquals('tests', Inflector::pluralize('test'));
+    protected $backupStaticAttributes = true;
+
+    protected function setUp () {
+        Inflector::flush();
     }
 
-    public function testSingularAndSingularize () {
-        $this->assertEquals('test', Inflector::singularize('tests'));
+    public function testPluralize () {
+        Inflector::plural('/$/', 's');
+
+        $this->assertEquals('cores', Inflector::pluralize('core'));
+    }
+
+    public function testSingularize () {
+        Inflector::singular('/s$/i', '');
+
+        $this->assertEquals('core', Inflector::singularize('cores'));
     }
 
     public function testUncountable () {
+        Inflector::uncountable(array('equipment', 'fish'));
+
         $this->assertEquals('equipment', Inflector::pluralize('equipment'));
         $this->assertEquals('equipment', Inflector::singularize('equipment'));
-
         $this->assertEquals('fish', Inflector::pluralize('fish'));
         $this->assertEquals('fish', Inflector::singularize('fish'));
     }
 
     public function testIrregular () {
+        Inflector::irregular('person', 'people');
+
         $this->assertEquals('person', Inflector::singularize('person'));
         $this->assertEquals('person', Inflector::singularize('people'));
         $this->assertEquals('people', Inflector::pluralize('person'));
@@ -62,28 +78,27 @@ class InflectorTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testFlush () {
-        Inflector::flush();
-
-        $this->assertEquals('test', Inflector::pluralize('test'));
-        $this->assertEquals('tests', Inflector::singularize('tests'));
+        // flush is called on setUp
+        $this->assertEquals('core', Inflector::pluralize('core'));
+        $this->assertEquals('cores', Inflector::singularize('cores'));
         $this->assertEquals('person', Inflector::pluralize('person'));
         $this->assertEquals('people', Inflector::singularize('people'));
     }
 
     public function testCamelize () {
-        $this->assertEquals('Foo', Inflector::camelize('foo'));
-        $this->assertEquals('FooBar', Inflector::camelize('foo_bar'));
-        $this->assertEquals('foo\BarBaz', Inflector::camelize('foo/bar_baz', true));
+        $this->assertEquals('Home', Inflector::camelize('home'));
+        $this->assertEquals('HomeController', Inflector::camelize('home_controller'));
+        $this->assertEquals('user\ArticlesController', Inflector::camelize('user/articles_controller', true));
     }
 
     public function testUnderscore () {
-        $this->assertEquals('foo', Inflector::underscore('Foo'));
-        $this->assertEquals('foo_bar', Inflector::underscore('FooBar'));
-        $this->assertEquals('foo/bar_baz', Inflector::underscore('foo\BarBaz'));
+        $this->assertEquals('home', Inflector::underscore('Home'));
+        $this->assertEquals('home_controller', Inflector::underscore('HomeController'));
+        $this->assertEquals('user/articles_controller', Inflector::underscore('user\ArticlesController'));
     }
 
     public function testSlug () {
-        $this->assertEquals("johns", Inflector::slug('John\'s'));
+        $this->assertEquals('jonhs', Inflector::slug("Jonh's"));
         $this->assertEquals('aeuoi-iaiecao-naon', Inflector::slug('ãéüöí ìàíèção nãoñ'));
         $this->assertEquals('i-can-use-amp-and-atilde', Inflector::slug('I can use &amp; and &atilde;'));
         $this->assertEquals('pound-double-quote-asterisk', Inflector::slug('£ pound " double quote * asterisk '));

@@ -20,44 +20,37 @@
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   Router
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  * @version    0.1
  */
 
-namespace Controller;
-
 /**
  * @see test_helper.php
  */
-require_once __DIR__ . '/../../test_helper.php';
+require_once __DIR__ . '/test_helper.php';
+
+// PHPUnit
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 /**
- * Router tests
+ * All framework tests
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   Router
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
-class RouterTest extends \PHPUnit_Framework_TestCase {
-    protected function setUp () {
-        $_SERVER['PATH_INFO'] = 'home';
-    }
+class AllTests {
+    public static function suite () {
+        $suite = new PHPUnit_Framework_TestSuite('Core PHP');
 
-    public function testConnect () {
-        Router::connect(':controller');
-        Router::dispatch();
-    }
+        $suite->addTest(Controller\AllTests::suite());
+        $suite->addTestSuite('ConfigTest');
+        $suite->addTestSuite('ControllerTest');
+        $suite->addTestSuite('InflectorTest');
+        $suite->addTestSuite('ProceduralTest');
 
-    /**
-     * @expectedException Controller\Router\Exception
-     */
-    public function testDisconnect () {
-        Router::disconnect(':controller');
-        Router::dispatch();
+        return $suite;
     }
 }
-

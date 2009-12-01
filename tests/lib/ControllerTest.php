@@ -26,10 +26,13 @@
  * @version    0.1
  */
 
-require_once __DIR__ . '/../TestHelper.php';
+/**
+ * @see test_helper.php
+ */
+require_once __DIR__ . '/../test_helper.php';
 
 /**
- * Controller test class
+ * Controller tests
  *
  * @package    Core
  * @subpackage UnitTests
@@ -41,37 +44,45 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
     /**
      * @expectedException Controller\Exception
      */
-    public function testFactoryInexistentController () {
-        Controller::factory('inexistent');
+    public function testDispatchInexistentController () {
+        Controller::dispatch('inexistent', 'index');
     }
 
     /**
      * @expectedException Controller\Exception
      */
-    public function testFactoryInvalidController () {
-        Controller::factory('invalid');
-    }
-
-    public function testFactoryValidController () {
-        Controller::factory('index');
+    public function testDispatchInvalidController () {
+        Controller::dispatch('invalid', 'index');
     }
 
     /**
      * @expectedException Controller\Exception
      */
     public function testDispatchInexistentAction () {
-        Controller::dispatch('index', 'inexistent');
+        Controller::dispatch('home', 'inexistent_action');
     }
 
     /**
      * @expectedException Controller\Exception
      */
     public function testDispatchProtectedAction () {
-        Controller::dispatch('index', 'protected_action');
+        Controller::dispatch('home', 'before_action');
     }
 
     public function testDispatchPublicAction () {
-        $this->assertEquals('IndexController::index', Controller::dispatch('index', 'index'));
+        $controller = Controller::dispatch('home', 'index');
+
+        $this->assertTrue($controller->before);
+        $this->assertEquals('HomeController::index', $controller->action);
+        $this->assertTrue($controller->after);
+    }
+
+    public function testGetRequest () {
+        $controller = Controller::dispatch('home', 'index');
+        $request = $controller->getRequest();
+
+        $this->assertTrue($request instanceOf Controller\Request);
+        $this->assertSame($request, $controller->getRequest());
     }
 }
 

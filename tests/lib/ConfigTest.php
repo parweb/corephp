@@ -26,10 +26,13 @@
  * @version    0.1
  */
 
-require_once __DIR__ . '/../TestHelper.php';
+/**
+ * @see test_helper.php
+ */
+require_once __DIR__ . '/../test_helper.php';
 
 /**
- * Config test class
+ * Config tests
  *
  * @package    Core
  * @subpackage UnitTests
@@ -44,12 +47,12 @@ class ConfigTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testSetAndGet () {
-        Config::set('foo.bar', 'foo');
-        $this->assertEquals('foo', Config::get('foo.bar'));
+        Config::set('application.name', 'Test Application');
+        $this->assertEquals('Test Application', Config::get('application.name'));
     }
 
     public function testGetWithDefaultValue () {
-        $this->assertEquals('default', Config::get('foo.baz', 'default'));
+        $this->assertEquals('http://www.example.com/', Config::get('application.host', 'http://www.example.com/'));
     }
 }
 

@@ -50,7 +50,6 @@ abstract class Router {
      * @param array $options
      */
     public static function connect ($url, array $options = array ()) {
-        $url = trim($url, '/');
         self::$routes[$url] = new Router\Route($url, $options);
     }
 

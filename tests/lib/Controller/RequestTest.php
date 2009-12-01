@@ -28,10 +28,13 @@
 
 namespace Controller;
 
-require_once __DIR__ . '/../../TestHelper.php';
+/**
+ * @see test_helper.php
+ */
+require_once __DIR__ . '/../../test_helper.php';
 
 /**
- * Request test class
+ * Router tests
  *
  * @package    Core
  * @subpackage UnitTests
@@ -78,8 +81,6 @@ class RequestTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testIsAjax () {
-        $_SERVER['REQUEST_METHOD'] = Request::GET;
-
         $request = new Request;
 
         $this->assertFalse($request->isAjax());

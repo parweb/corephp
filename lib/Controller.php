@@ -57,6 +57,8 @@ abstract class Controller {
 
     /**
      * Get request instance
+     *
+     * @return Controller\Request
      */
     public function getRequest () {
         if (!$this->request instanceof Controller\Request) {
@@ -118,6 +120,8 @@ abstract class Controller {
         }
 
         $kontroller->afterAction();
+
+        return $kontroller;
     }
 
     /**

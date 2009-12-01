@@ -77,7 +77,7 @@ class Route {
      * @param array $options
      */
     public function __construct ($url, array $options = array ()) {
-        $this->url = $url;
+        $this->url = trim($url, '/');
         $this->options = array_merge(self::$DEFAULT_OPTIONS, $options);
     }
 
