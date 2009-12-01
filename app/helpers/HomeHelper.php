@@ -35,16 +35,6 @@
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
-abstract class HomeHelper {
-    public static function ol (array $items) {
-        $doc = new DOMDocument;
-        $ol  = $doc->appendChild($doc->createElement('ol'));
-
-        foreach ($items as $item) {
-            $ol->appendChild($doc->createElement('li', $item));
-        }
-
-        return $doc->saveHTML();
-    }
+abstract class HomeHelper extends ApplicationHelper {
 }
 

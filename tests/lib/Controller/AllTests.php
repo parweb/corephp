@@ -56,3 +56,4 @@ class AllTests {
         return $suite;
     }
 }
+
