@@ -22,7 +22,7 @@
  * @subpackage Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
- * @version    0.1
+ * @version    0.2
  */
 
 namespace Controller;
@@ -49,24 +49,25 @@ abstract class Router {
      * @param string $url
      * @param array $options
      */
-    public static function connect ($url, array $options = array ()) {
+    public static function connect ($url, array $options = array()) {
         self::$routes[$url] = new Router\Route($url, $options);
     }
 
     /**
-     * Disconnect a route
+     * Connect a module
      *
-     * @param string $url
+     * @param string $module
+     * @param Closure $closure
      */
-    public static function disconnect ($url) {
-        unset(self::$routes[$url]);
+    public static function module ($module, \Closure $closure) {
+        self::$routes[$module] = new Router\Module($module, $closure);
     }
 
     /**
      * Dispatch request
      */
     public static function dispatch () {
-        $uri = isset($_SERVER['PATH_INFO']) ? trim($_SERVER['PATH_INFO'], '/') : '';
+        $uri = preg_replace('/^\/(?=.)|(?<=.)\/$/', '', $_SERVER['PATH_INFO'] ?: '/');
         $options = null;
 
         foreach (self::$routes as $route) {
@@ -75,7 +76,7 @@ abstract class Router {
             }
         }
 
-        if (!$options) {
+        if (empty($options)) {
             throw new Router\Exception('No route matches');
         }
 

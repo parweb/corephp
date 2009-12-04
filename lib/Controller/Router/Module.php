@@ -23,13 +23,13 @@
  * @category   Router
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
- * @version    0.2
+ * @version    0.1
  */
 
 namespace Controller\Router;
 
 /**
- * Controller router class
+ * Module class
  *
  * @package    Core
  * @subpackage Controller
@@ -37,48 +37,37 @@ namespace Controller\Router;
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
-class Route {
+class Module {
     /**
-     * Default options
-     *
-     * @var array
-     */
-    protected static $defaultOptions = array(
-    	'controller' => 'home',
-    	'action'     => 'index',
-    	'format'     => 'html'
-    );
-
-    /**
-     * URL
+     * Module name
      *
      * @var string
      */
-    protected $url;
+    protected $module;
 
     /**
-     * Route options
+     * Closure to configure route
+     *
+     * @var Closure
+     */
+    protected $closure;
+
+    /**
+     * Configured routes
      *
      * @var array
      */
-    protected $options;
+    protected $routes;
 
     /**
-     * Compiled regex
+     * Initialize the module
      *
-     * @var string
+     * @param string $module
+     * @param Closure $closure
      */
-    protected $regex;
-
-    /**
-     * Set $url and $options
-     *
-     * @param string $url
-     * @param array $options
-     */
-    public function __construct ($url, array $options = array ()) {
-        $this->url = $url;
-        $this->options = array_merge(self::$defaultOptions, $options);
+    public function __construct ($module, \Closure $closure) {
+        $this->module = $module;
+        $this->closure = $closure;
     }
 
     /**
@@ -88,23 +77,52 @@ class Route {
      * @return array or false
      */
     public function match ($uri) {
-        if (preg_match($this->makeRegex(), $uri, $options)) {
-            return array_merge($this->options, $options);
+        $options = null;
+
+        foreach ($this->makeRoutes() as $route) {
+            if ($options = $route->match($uri)) {
+                break;
+            }
         }
 
-        return false;
+        if ($options && $route instanceof Route) {
+            $options['controller'] = "$this->module/$options[controller]";
+        }
+
+        return $options;
     }
 
     /**
-     * Make route regex
+     * Connect a module route
+     *
+     * @param string $url
+     * @param array $options
      */
-    protected function makeRegex () {
-        if (!$this->regex) {
-            $url = preg_replace('/\\\:([a-z\d_]+)/i', '(?<\1>[a-zA-Z\d_]+)', preg_quote($this->url, '/'));
-            $this->regex = '/^' . $url . '$/';
+    public function connect ($url, array $options = array()) {
+        $url = rtrim("$this->module/$url", '/');
+        $this->routes[$url] = new Route($url, $options);
+    }
+
+    /**
+     * Connect a submodule
+     *
+     * @param string $submodule
+     * @param Closure $closure
+     */
+    public function submodule ($submodule, \Closure $closure) {
+        $submodule = "$this->module/$submodule";
+        $this->routes[$submodule] = new self($submodule, $closure);
+    }
+
+    /**
+     * Make routes
+     */
+    protected function makeRoutes () {
+        if (empty($this->routes)) {
+            $this->closure->__invoke($this);
         }
 
-        return $this->regex;
+        return $this->routes;
     }
 }
 
