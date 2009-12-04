@@ -49,11 +49,11 @@ abstract class Controller {
     private $request = null;
 
     /**
-     * Perfomed?
+     * Performed?
      *
      * @var boolean
      */
-    private $perfomed = false;
+    private $performed = false;
 
     /**
      * Get request instance
@@ -115,7 +115,7 @@ abstract class Controller {
         // Render if needed
         $kontroller->beforeAction();
 
-        if ($kontroller->$action() !== false && !$kontroller->perfomed) {
+        if ($kontroller->$action() !== false && !$kontroller->performed) {
             $kontroller->render();
         }
 
@@ -143,11 +143,7 @@ abstract class Controller {
      * @param string $layout
      */
     protected function render ($template = null, $layout = null) {
-        if ($this->perfomed) {
-            throw new Controller\DoubleRenderException('Can only render or redirect once per action');
-        }
-
-        $this->perfomed = true;
+        $this->perform();
 
         if (!$template) {
             $template = param('controller') . '/' . param('action');
@@ -164,6 +160,56 @@ abstract class Controller {
         $view->set($this);
 
         echo $view->render();
+    }
+
+    /**
+     * Redirect request to $url
+     *
+     * @param string|array $url
+     * @param integer $status
+     * @return false
+     */
+    protected function redirect ($url, $status = 302) {
+        $this->perform();
+
+        $codes = array(
+            301 => 'Moved Permanently',
+            302 => 'Found',
+            307 => 'Temporary Redirect'
+        );
+
+        if (isset($codes[$status])) {
+            $this->header("HTTP/1.1 $status $codes[$status]");
+        }
+
+        $this->header("Location: $url");
+
+        return false;
+    }
+
+    /**
+     * Throw a exception if controller has performed and set performed as true if not
+     *
+     * @throws Controller\DoubleRenderException
+     */
+    private function perform () {
+        if ($this->performed) {
+            throw new Controller\DoubleRenderException('Can only render or redirect once per action');
+        }
+
+        $this->performed = true;
+    }
+
+    /**
+     * Wrapper to procedural header()
+     *
+     * @see header()
+     * @param string $string
+     * @param boolean $replace
+     * @param integer $http_response_code
+     */
+    protected function header ($string, $replace = true, $http_response_code = null) {
+        header($string, $replace, $http_response_code);
     }
 }
 
