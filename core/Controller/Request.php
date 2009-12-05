@@ -146,5 +146,15 @@ class Request {
     public function isAjax () {
         return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XmlHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH'];
     }
+
+    /**
+     * Returns the referring URL for this request or the default value
+     *
+     * @param string $default
+     * @return string
+     */
+    public function referer ($default = '/') {
+        return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $default;
+    }
 }
 

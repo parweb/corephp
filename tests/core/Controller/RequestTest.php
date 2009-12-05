@@ -89,5 +89,15 @@ class RequestTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertTrue($request->isAjax());
     }
+
+    public function testReferer () {
+        $request = new Request;
+
+        $this->assertEquals('/', $request->referer());
+
+        $_SERVER['HTTP_REFERER'] = 'http://www.example.com/';
+
+        $this->assertEquals('http://www.example.com/', $request->referer());
+    }
 }
 

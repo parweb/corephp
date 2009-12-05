@@ -2,7 +2,6 @@ h1. TODO
 
 h2. Utils
 
-Request::referer to given the referer
 Request format like JSON, XML, RSS, etc
 Flash class
 Session class (lazy load)
