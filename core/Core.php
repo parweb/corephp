@@ -45,7 +45,7 @@ abstract class Core {
      * Load vendor plugins
      */
     protected static function loadVendorPlugins () {
-        foreach (new GlobIterator('vendor/plugins/*/init.php', GlobIterator::CURRENT_AS_PATHNAME) as $file) {
+        foreach (new GlobIterator('vendor/*/init.php', GlobIterator::CURRENT_AS_PATHNAME) as $file) {
             require $file;
         }
     }
