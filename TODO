@@ -1,28 +1,21 @@
-====
-TODO
-====
+h1. TODO
+
+h2. Utils
 
 Request::referer() to given the referer
-
 Request format type like JSON, XML, RSS
-
-Redirect URL - Maybe Request::redirect()
 Flash class
 Generate URLs with a helper
 
 
-=====
-Maybe
-=====
+h3. Search
 
 Lighttpd Configuration - Use mod_magnetic?
 How routes arguments will be passed to controller?
 Cookie class?
 
 
-=====
-Tests
-=====
+h4. Tests
 
 I need to write more tests
 
