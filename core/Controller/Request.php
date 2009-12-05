@@ -89,7 +89,7 @@ class Request {
      *
      * @return string or false
      */
-    public function getMethod () {
+    public function method () {
         return isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : false;
     }
 
@@ -99,7 +99,7 @@ class Request {
      * @return boolean
      */
     public function isGet () {
-        return self::GET == $this->getMethod();
+        return self::GET == $this->method();
     }
 
     /**
@@ -108,7 +108,7 @@ class Request {
      * @return boolean
      */
     public function isPost () {
-        return self::POST == $this->getMethod();
+        return self::POST == $this->method();
     }
 
     /**
@@ -117,7 +117,7 @@ class Request {
      * @return boolean
      */
     public function isHead () {
-        return self::HEAD == $this->getMethod();
+        return self::HEAD == $this->method();
     }
 
     /**
@@ -126,7 +126,7 @@ class Request {
      * @return boolean
      */
     public function isDelete () {
-        return self::DELETE == $this->getMethod();
+        return self::DELETE == $this->method();
     }
 
     /**
@@ -135,7 +135,7 @@ class Request {
      * @return boolean
      */
     public function isPut () {
-        return self::PUT == $this->getMethod();
+        return self::PUT == $this->method();
     }
 
     /**
