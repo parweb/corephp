@@ -20,38 +20,53 @@
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   Controller
+ * @category   Functions
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  * @version    0.1
  */
 
-namespace Controller;
-
 /**
  * @see test_helper.php
  */
-require_once __DIR__ . '/../../test_helper.php';
+require_once __DIR__ . '/../test_helper.php';
 
 /**
- * Controller suite
+ * Functions tests
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   Controller
+ * @category   Functions
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
-class AllTests {
-    public static function suite () {
-        $suite = new \PHPUnit_Framework_TestSuite('Controller');
+class FunctionsTest extends PHPUnit_Framework_TestCase {
+    public function testAutoloadWithInvalidClassName () {
+        $this->assertFalse(__autoload('invalid class name'));
+    }
 
-        $suite->addTest(Router\AllTests::suite());
+    public function testAppendIncludePath () {
+        $before = get_include_path();
+        $after = $before . PATH_SEPARATOR . __DIR__;
 
-        $suite->addTestSuite('Controller\RouterTest');
-        $suite->addTestSuite('Controller\RequestTest');
+        $this->assertEquals($before, append_include_path(__DIR__));
+        $this->assertEquals($after, get_include_path());
 
-        return $suite;
+        set_include_path($before);
+    }
+
+    public function testMbLcfirst () {
+        $this->assertEquals('çÇÇ', mb_lcfirst('ÇÇÇ', 'utf-8'));
+    }
+
+    public function testParam () {
+        $_REQUEST['user_id'] = 10;
+
+        $this->assertEquals(10, param('user_id', -1));
+
+        unset($_REQUEST['user_id']);
+
+        $this->assertEquals(-1, param('user_id', -1));
     }
 }
 

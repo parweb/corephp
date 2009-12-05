@@ -60,7 +60,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testInvalidRoute () {
-        $this->assertFalse($this->route->match('users/list.xml fail'));
+        $this->assertFalse($this->route->match('users/list'));
     }
 }
 

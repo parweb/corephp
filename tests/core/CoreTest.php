@@ -20,38 +20,39 @@
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  * @version    0.1
  */
 
-namespace Controller;
-
 /**
  * @see test_helper.php
  */
-require_once __DIR__ . '/../../test_helper.php';
+require_once __DIR__ . '/../test_helper.php';
 
 /**
- * Controller suite
+ * Core tests
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
-class AllTests {
-    public static function suite () {
-        $suite = new \PHPUnit_Framework_TestSuite('Controller');
+class CoreTest extends PHPUnit_Framework_TestCase {
+    /**
+     * @covers Core::boot
+     * @covers Core::loadBootFiles
+     */
+    public function testLoadBootFiles () {
+        $this->assertTrue(defined('LOADED_BOOT_FILE') && LOADED_BOOT_FILE);
+    }
 
-        $suite->addTest(Router\AllTests::suite());
-
-        $suite->addTestSuite('Controller\RouterTest');
-        $suite->addTestSuite('Controller\RequestTest');
-
-        return $suite;
+    /**
+     * @covers Core::boot
+     * @covers Core::loadVendorPlugins
+     */
+    public function testLoadVendorPlugins () {
+        $this->assertTrue(defined('LOADED_VENDOR_FILE') && LOADED_VENDOR_FILE);
     }
 }
 

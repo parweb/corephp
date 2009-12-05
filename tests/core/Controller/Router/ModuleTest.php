@@ -20,52 +20,57 @@
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   Procedural
+ * @category   Router
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  * @version    0.1
  */
 
+namespace Controller\Router;
+
 /**
  * @see test_helper.php
  */
-require_once __DIR__ . '/../test_helper.php';
+require_once __DIR__ . '/../../../test_helper.php';
 
 /**
- * Procedural tests
+ * Module tests
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   Procedural
+ * @category   Router
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
-class ProceduralTest extends PHPUnit_Framework_TestCase {
-    public function testAutoloadWithInvalidClassName () {
-        $this->assertFalse(__autoload('invalid class name'));
+class ModuleTest extends \PHPUnit_Framework_TestCase {
+    protected function setUp () {
+        $this->module = new Module('admin', function ($admin) {
+            $admin->submodule('crm', function ($system) {
+                $system->connect('customers', array('controller' => 'customers'));
+            });
+
+            $admin->connect('/', array('controller' => 'dashboard'));
+        });
     }
 
-    public function testAppendIncludePath () {
-        $before = get_include_path();
-        $after = get_include_path() . PATH_SEPARATOR . __DIR__;
-
-        $this->assertEquals($before, append_include_path(__DIR__));
-        $this->assertEquals($after, get_include_path());
-
-        set_include_path($before);
+    protected function tearDown () {
+        unset($this->module);
     }
 
-    public function testMbLcfirst () {
-        $this->assertEquals('çÇÇ', mb_lcfirst('ÇÇÇ', 'utf-8'));
+    public function testMatch () {
+        $options = $this->module->match('admin');
+
+        $this->assertEquals('admin/dashboard', $options['controller']);
+        $this->assertEquals('index', $options['action']);
+        $this->assertEquals('html', $options['format']);
     }
 
-    public function testParam () {
-        $_REQUEST['user_id'] = 1;
-        $this->assertEquals(1, param('user_id'));
-    }
+    public function testMatchSubModule () {
+        $options = $this->module->match('admin/crm/customers');
 
-    public function testParamWithDefaultValue () {
-        $this->assertEquals(0, param('user_id', 0));
+        $this->assertEquals('admin/crm/customers', $options['controller']);
+        $this->assertEquals('index', $options['action']);
+        $this->assertEquals('html', $options['format']);
     }
 }
 

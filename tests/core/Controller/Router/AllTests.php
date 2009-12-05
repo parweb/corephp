@@ -33,9 +33,6 @@ namespace Controller\Router;
  */
 require_once __DIR__ . '/../../../test_helper.php';
 
-// PHPUnit
-\PHPUnit_Util_Filter::addFileToFilter(__FILE__);
-
 /**
  * Controller\Router suite
  *
@@ -47,9 +44,10 @@ require_once __DIR__ . '/../../../test_helper.php';
  */
 class AllTests {
     public static function suite () {
-        $suite = new \PHPUnit_Framework_TestSuite('Controller\\Router');
+        $suite = new \PHPUnit_Framework_TestSuite('Controller\Router');
 
-        $suite->addTestSuite('Controller\\Router\\RouteTest');
+        $suite->addTestSuite('Controller\Router\RouteTest');
+        $suite->addTestSuite('Controller\Router\ModuleTest');
 
         return $suite;
     }

@@ -22,16 +22,13 @@
  * @subpackage UnitTests
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
- * @version    0.1
+ * @version    0.1.1
  */
 
 /**
  * @see test_helper.php
  */
 require_once __DIR__ . '/test_helper.php';
-
-// PHPUnit
-PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 /**
  * All framework tests
@@ -45,11 +42,13 @@ class AllTests {
     public static function suite () {
         $suite = new PHPUnit_Framework_TestSuite('Core PHP');
 
-        $suite->addTest(Controller\AllTests::suite());
+        $suite->addTestSuite('FunctionsTest');
+        $suite->addTestSuite('InflectorTest');
+        $suite->addTestSuite('CoreTest');
         $suite->addTestSuite('ConfigTest');
         $suite->addTestSuite('ControllerTest');
-        $suite->addTestSuite('InflectorTest');
-        $suite->addTestSuite('ProceduralTest');
+
+        $suite->addTest(Controller\AllTests::suite());
 
         return $suite;
     }

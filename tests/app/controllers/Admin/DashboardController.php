@@ -19,39 +19,36 @@
  * along with Core PHP Framework. If not, see <http://www.gnu.org/licenses/>.
  *
  * @package    Core
- * @subpackage UnitTests
+ * @subpackage Application
  * @category   Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  * @version    0.1
  */
 
-namespace Controller;
+namespace Admin;
 
 /**
- * @see test_helper.php
- */
-require_once __DIR__ . '/../../test_helper.php';
-
-/**
- * Controller suite
+ * Dashboard controller
  *
  * @package    Core
- * @subpackage UnitTests
+ * @subpackage Application
  * @category   Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
-class AllTests {
-    public static function suite () {
-        $suite = new \PHPUnit_Framework_TestSuite('Controller');
+class DashboardController extends \ApplicationController
+{
+    public function index () {
+        $this->action = __METHOD__;
+    }
 
-        $suite->addTest(Router\AllTests::suite());
+    protected function beforeAction () {
+        $this->before = true;
+    }
 
-        $suite->addTestSuite('Controller\RouterTest');
-        $suite->addTestSuite('Controller\RequestTest');
-
-        return $suite;
+    protected function afterAction () {
+        $this->after = true;
     }
 }
 

@@ -36,15 +36,17 @@ chdir(__DIR__);
 require_once 'PHPUnit/Framework.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-PHPUnit_Util_Filter::addFileToFilter(__FILE__);
-PHPUnit_Util_Filter::addDirectoryToFilter('app');
+// Filter tests folder
+PHPUnit_Util_Filter::addDirectoryToFilter(__DIR__);
 
 // Autoload
 require_once '../core/functions.php';
 
 // Set include path
 $cwd = getcwd();
-append_include_path("$cwd/core", "$cwd/../core", "$cwd/app/models", "$cwd/app/controllers", "$cwd/app/helpers");
+
+append_include_path("$cwd/../core", "$cwd/app/models", "$cwd/app/controllers", "$cwd/app/helpers");
+append_include_path("$cwd/core");
 
 unset($cwd);
 

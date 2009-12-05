@@ -12,7 +12,7 @@
  *
  * Core PHP Framework is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
@@ -20,38 +20,11 @@
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   Controller
+ * @category   BootFiles
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  * @version    0.1
  */
 
-namespace Controller;
-
-/**
- * @see test_helper.php
- */
-require_once __DIR__ . '/../../test_helper.php';
-
-/**
- * Controller suite
- *
- * @package    Core
- * @subpackage UnitTests
- * @category   Controller
- * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
- * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
- */
-class AllTests {
-    public static function suite () {
-        $suite = new \PHPUnit_Framework_TestSuite('Controller');
-
-        $suite->addTest(Router\AllTests::suite());
-
-        $suite->addTestSuite('Controller\RouterTest');
-        $suite->addTestSuite('Controller\RequestTest');
-
-        return $suite;
-    }
-}
+const LOADED_BOOT_FILE = true;
 
