@@ -28,6 +28,11 @@
 
 use Controller\Router;
 
+// Admin route
+Router::module('admin', function ($admin) {
+    $admin->connect('/', array('controller' => 'dashboard'));
+});
+
 // Default routes
 Router::connect('/');
 Router::connect('/:controller');

@@ -28,6 +28,8 @@
 
 namespace Controller\Router;
 
+use Closure;
+
 /**
  * Module class
  *
@@ -53,7 +55,7 @@ class Module {
     protected $closure;
 
     /**
-     * Configured routes
+     * Module routes
      *
      * @var array
      */
@@ -65,7 +67,7 @@ class Module {
      * @param string $module
      * @param Closure $closure
      */
-    public function __construct ($module, \Closure $closure) {
+    public function __construct ($module, Closure $closure) {
         $this->module = $module;
         $this->closure = $closure;
     }
@@ -79,7 +81,7 @@ class Module {
     public function match ($uri) {
         $options = null;
 
-        foreach ($this->makeRoutes() as $route) {
+        foreach ($this->routes() as $route) {
             if ($options = $route->match($uri)) {
                 break;
             }
@@ -109,16 +111,16 @@ class Module {
      * @param string $submodule
      * @param Closure $closure
      */
-    public function submodule ($submodule, \Closure $closure) {
+    public function submodule ($submodule, Closure $closure) {
         $submodule = "$this->module/$submodule";
         $this->routes[$submodule] = new self($submodule, $closure);
     }
 
     /**
-     * Make routes
+     * Get routes
      */
-    protected function makeRoutes () {
-        if (empty($this->routes)) {
+    protected function routes () {
+        if (!$this->routes) {
             $this->closure->__invoke($this);
         }
 

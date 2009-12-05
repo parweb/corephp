@@ -29,7 +29,7 @@
 namespace Controller\Router;
 
 /**
- * Controller router class
+ * Route class
  *
  * @package    Core
  * @subpackage Controller
@@ -88,7 +88,7 @@ class Route {
      * @return array or false
      */
     public function match ($uri) {
-        if (preg_match($this->makeRegex(), $uri, $options)) {
+        if (preg_match($this->regex(), $uri, $options)) {
             return array_merge($this->options, $options);
         }
 
@@ -96,9 +96,9 @@ class Route {
     }
 
     /**
-     * Make route regex
+     * Get route regex
      */
-    protected function makeRegex () {
+    protected function regex () {
         if (!$this->regex) {
             $url = preg_replace('/\\\:([a-z\d_]+)/i', '(?<\1>[a-zA-Z\d_]+)', preg_quote($this->url, '/'));
             $this->regex = '/^' . $url . '$/';

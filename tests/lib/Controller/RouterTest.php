@@ -44,19 +44,11 @@ require_once __DIR__ . '/../../test_helper.php';
  */
 class RouterTest extends \PHPUnit_Framework_TestCase {
     protected function setUp () {
-        $_SERVER['PATH_INFO'] = 'home';
+        $_SERVER['PATH_INFO'] = '/';
     }
 
     public function testConnect () {
-        Router::connect(':controller');
-        Router::dispatch();
-    }
-
-    /**
-     * @expectedException Controller\Router\Exception
-     */
-    public function testDisconnect () {
-        Router::disconnect(':controller');
+        Router::connect('/');
         Router::dispatch();
     }
 }

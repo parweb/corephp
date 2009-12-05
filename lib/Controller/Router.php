@@ -76,7 +76,7 @@ abstract class Router {
             }
         }
 
-        if (empty($options)) {
+        if (!$options) {
             throw new Router\Exception('No route matches');
         }
 
