@@ -2,20 +2,22 @@ h1. TODO
 
 h2. Utils
 
-Request::referer() to given the referer
-Request format type like JSON, XML, RSS
+Request::referer to given the referer
+Request format like JSON, XML, RSS, etc
 Flash class
-Generate URLs with a helper
+Session class (lazy load)
+Generate URLs
+Cookie class
 
 
-h3. Search
+h2. Search
 
-Lighttpd Configuration - Use mod_magnetic?
-How routes arguments will be passed to controller?
-Cookie class?
+Lighttpd configuration - Use mod_magnetic
+Apache configuration - Use .htaccess
+IIS configuration - Use what?
 
 
-h4. Tests
+h2. Tests
 
-I need to write more tests
+Fix coverage report
 
