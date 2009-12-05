@@ -95,7 +95,6 @@ class View {
     }
 
     public function render () {
-        var_dump($this);
     }
 }
 
