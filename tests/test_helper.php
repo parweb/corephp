@@ -40,11 +40,11 @@ PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 PHPUnit_Util_Filter::addDirectoryToFilter('app');
 
 // Autoload
-require_once '../lib/functions.php';
+require_once '../core/functions.php';
 
 // Set include path
 $cwd = getcwd();
-append_include_path("$cwd/lib", "$cwd/../lib", "$cwd/app/models", "$cwd/app/controllers", "$cwd/app/helpers");
+append_include_path("$cwd/core", "$cwd/../core", "$cwd/app/models", "$cwd/app/controllers", "$cwd/app/helpers");
 
 unset($cwd);
 
