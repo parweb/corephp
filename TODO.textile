@@ -1,0 +1,21 @@
+h1. TODO
+
+h2. Utils
+
+Request::referer() to given the referer
+Request format type like JSON, XML, RSS
+Flash class
+Generate URLs with a helper
+
+
+h3. Search
+
+Lighttpd Configuration - Use mod_magnetic?
+How routes arguments will be passed to controller?
+Cookie class?
+
+
+h4. Tests
+
+I need to write more tests
+
