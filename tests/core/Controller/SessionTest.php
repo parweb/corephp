@@ -74,5 +74,57 @@ class SessionTest extends \PHPUnit_Framework_TestCase {
 
         unset($this->session->bar);
     }
+
+    public function testFlash () {
+        // Initial state
+        $this->assertFalse(isset($this->session->flash));
+
+        $this->session->flash = 'foo';
+        $this->assertEquals('foo', $this->session->flash);
+
+        // Next request
+        $this->tearDown();
+        $this->setUp();
+
+        $this->assertTrue(isset($this->session->flash));
+        $this->assertEquals('foo', $this->session->flash);
+
+        // Next request
+        $this->tearDown();
+        $this->setUp();
+
+        $this->assertFalse(isset($this->session->flash));
+    }
+
+    public function testFlashTwice () {
+        // Initial state
+        $this->assertFalse(isset($this->session->flash));
+
+        $this->session->flash = 'foo';
+        $this->assertEquals('foo', $this->session->flash);
+
+        // Next request
+        $this->tearDown();
+        $this->setUp();
+
+        $this->assertTrue(isset($this->session->flash));
+        $this->assertEquals('foo', $this->session->flash);
+
+        $this->session->flash = 'bar';
+        $this->assertEquals('bar', $this->session->flash);
+
+        // Next request
+        $this->tearDown();
+        $this->setUp();
+
+        $this->assertTrue(isset($this->session->flash));
+        $this->assertEquals('bar', $this->session->flash);
+
+        // Next request
+        $this->tearDown();
+        $this->setUp();
+
+        $this->assertFalse(isset($this->session->flash));
+    }
 }
 

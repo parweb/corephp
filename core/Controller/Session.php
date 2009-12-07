@@ -37,16 +37,31 @@ namespace Controller;
  */
 class Session {
     /**
+     * Flash data
+     *
+     * @var mixed
+     */
+    protected $flash;
+
+    /**
      * Initialize session data
      */
     public function __construct () {
         session_start();
+
+        if (isset($_SESSION['flash'])) {
+            $this->flash = $_SESSION['flash'];
+        }
     }
 
     /**
      * Write session data and end session
      */
     public function __destruct () {
+        if (isset($_SESSION['flash']) && $_SESSION['flash'] == $this->flash) {
+            unset($_SESSION['flash']);
+        }
+
         session_write_close();
     }
 
