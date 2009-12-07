@@ -42,11 +42,11 @@ abstract class Controller {
     protected $layout = null;
 
     /**
-     * Request
+     * Current request
      *
      * @var Controller\Request
      */
-    private $request = null;
+    protected $request = null;
 
     /**
      * Performed?
@@ -56,16 +56,10 @@ abstract class Controller {
     private $performed = false;
 
     /**
-     * Get request instance
-     *
-     * @return Controller\Request
+     * Setup controller
      */
-    public function getRequest () {
-        if (!$this->request instanceof Controller\Request) {
-            $this->request = new Controller\Request;
-        }
-
-        return $this->request;
+    public function __construct () {
+        $this->request = new Controller\Request;
     }
 
     /**
@@ -99,7 +93,6 @@ abstract class Controller {
      * @throws Controller\Exception when action is not public
      */
     public static function dispatch ($controller, $action) {
-        // Dispatch action to controller
         $kontroller = self::factory($controller);
         $action     = Inflector::camelize($action, true);
         $reflection = new ReflectionClass($kontroller);
@@ -112,7 +105,6 @@ abstract class Controller {
             throw new Controller\Exception("Action `$action' is not public");
         }
 
-        // Render if needed
         $kontroller->beforeAction();
 
         if ($kontroller->$action() !== false && !$kontroller->performed) {

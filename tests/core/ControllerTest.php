@@ -80,13 +80,5 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('HomeController::index', $controller->action);
         $this->assertTrue($controller->after);
     }
-
-    public function testGetRequest () {
-        $controller = Controller::dispatch('home', 'index');
-        $request = $controller->getRequest();
-
-        $this->assertType('Controller\Request', $request);
-        $this->assertSame($request, $controller->getRequest());
-    }
 }
 
