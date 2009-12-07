@@ -35,6 +35,7 @@ const NAMESPACE_SEPARATOR = '\\';
  * Autoload the received class
  *
  * @param string $class
+ * @return false if invalid class name
  */
 function __autoload ($class) {
     if (preg_match('/[^\\\a-z\d_]/i', $class)) {

@@ -20,7 +20,6 @@
  *
  * @package    Core
  * @subpackage Application
- * @category   Routes
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  * @version    0.1
@@ -33,11 +32,6 @@ Router::module('admin', function ($admin) {
     $admin->connect('/', array('controller' => 'dashboard'));
 });
 
-// Default routes
+// Root route
 Router::connect('/');
-Router::connect('/:controller');
-Router::connect('/:controller/:action');
-Router::connect('/:controller/:action.:type');
-Router::connect('/:controller/:action/:id');
-Router::connect('/:controller/:action/:id.:type');
 

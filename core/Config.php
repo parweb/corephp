@@ -22,7 +22,7 @@
  * @subpackage Config
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
- * @version    0.1
+ * @version    0.1a
  */
 
 /**
@@ -58,11 +58,7 @@ abstract class Config {
      * @return mixed
      */
     public static function get ($key, $default = null) {
-        if (isset(self::$configs[$key])) {
-            return self::$configs[$key];
-        }
-
-        return $default;
+        return isset(self::$configs[$key]) ? self::$configs[$key] : $default;
     }
 
     /**

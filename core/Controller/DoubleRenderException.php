@@ -28,7 +28,7 @@
 namespace Controller;
 
 /**
- * Controller exception class
+ * Double render exception class
  *
  * @package    Core
  * @subpackage Controller

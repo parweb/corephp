@@ -21,7 +21,7 @@
  * @package    Core
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
- * @version    0.1
+ * @version    0.1a
  */
 
 /**
@@ -46,7 +46,7 @@ abstract class Core {
      */
     protected static function loadVendorPlugins () {
         foreach (new GlobIterator('vendor/*/init.php', GlobIterator::CURRENT_AS_PATHNAME) as $file) {
-            require $file;
+            require_once $file;
         }
     }
 
@@ -55,7 +55,7 @@ abstract class Core {
      */
     protected static function loadBootFiles () {
         foreach (new GlobIterator('app/bootfiles/*.php', GlobIterator::CURRENT_AS_PATHNAME) as $file) {
-            require $file;
+            require_once $file;
         }
     }
 
