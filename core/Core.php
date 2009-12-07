@@ -58,14 +58,5 @@ abstract class Core {
             require_once $file;
         }
     }
-
-    /**
-     * Dispatch request
-     *
-     * @see Controller\Router::dispatch()
-     */
-    public static function dispatch () {
-        Controller\Router::dispatch();
-    }
 }
 

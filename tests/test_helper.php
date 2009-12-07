@@ -50,6 +50,3 @@ append_include_path("$cwd/core");
 
 unset($cwd);
 
-// Boot framework
-Core::boot();
-

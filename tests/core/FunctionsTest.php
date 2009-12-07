@@ -41,7 +41,7 @@ require_once __DIR__ . '/../test_helper.php';
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
 class FunctionsTest extends PHPUnit_Framework_TestCase {
-    public function testAutoloadWithInvalidClassName () {
+    public function testAutoloadInvalidClassName () {
         $this->assertFalse(__autoload('invalid class name'));
     }
 

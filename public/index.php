@@ -42,5 +42,5 @@ unset($cwd);
 
 // Boot and dispatch request
 Core::boot();
-Core::dispatch();
+Controller\Router::dispatch();
 

@@ -39,18 +39,14 @@ require_once __DIR__ . '/../test_helper.php';
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
 class CoreTest extends PHPUnit_Framework_TestCase {
-    /**
-     * @covers Core::boot
-     * @covers Core::loadBootFiles
-     */
+    public function testBoot () {
+        Core::boot();
+    }
+
     public function testLoadBootFiles () {
         $this->assertTrue(defined('LOADED_BOOT_FILE') && LOADED_BOOT_FILE);
     }
 
-    /**
-     * @covers Core::boot
-     * @covers Core::loadVendorPlugins
-     */
     public function testLoadVendorPlugins () {
         $this->assertTrue(defined('LOADED_VENDOR_FILE') && LOADED_VENDOR_FILE);
     }

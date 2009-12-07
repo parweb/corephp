@@ -43,38 +43,30 @@ require_once __DIR__ . '/../../test_helper.php';
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
 class RouterTest extends \PHPUnit_Framework_TestCase {
-    /**
-     * @covers Core::dispatch
-     * @covers Controller\Router::dispatch
-     */
-    public function testDispatch () {
+    protected $backupStaticAttributes = true;
+
+    public function testConnect () {
         $_SERVER['PATH_INFO'] = '/';
 
         Router::connect('/');
         Router::dispatch();
     }
 
-    /**
-     * @covers Core::dispatch
-     * @covers Controller\Router::dispatch
-     * @expectedException Controller\Router\Exception
-     */
-    public function testDispatchWithInvalidRoute () {
-        $_SERVER['PATH_INFO'] = '/invalid/route';
-
-        Router::dispatch();
-    }
-
-    /**
-     * @covers Core::dispatch
-     * @covers Controller\Router::dispatch
-     */
-    public function testDispatchWithModule () {
+    public function testModule () {
         $_SERVER['PATH_INFO'] = '/admin';
 
         Router::module('admin', function ($admin) {
             $admin->connect('/', array('controller' => 'dashboard'));
         });
+
+        Router::dispatch();
+    }
+
+    /**
+     * @expectedException Controller\Router\Exception
+     */
+    public function testDispatchInvalidRoute () {
+        $_SERVER['PATH_INFO'] = '/invalid/route';
 
         Router::dispatch();
     }

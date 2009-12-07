@@ -69,10 +69,6 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
         Controller::dispatch('home', 'before_action');
     }
 
-    /**
-     * @covers Controller::beforeAction
-     * @covers Controller::afterAction
-     */
     public function testDispatchPublicAction () {
         $controller = Controller::dispatch('home', 'index');
 

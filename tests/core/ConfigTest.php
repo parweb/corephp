@@ -41,10 +41,6 @@ require_once __DIR__ . '/../test_helper.php';
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
 class ConfigTest extends PHPUnit_Framework_TestCase {
-    /**
-     * @covers Core::boot
-     * @covers Config::parseApplicationFiles
-     */
     public function testParseApplicationFiles () {
         $this->assertEquals('test', Config::get('application.environment'));
     }
