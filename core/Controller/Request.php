@@ -153,7 +153,7 @@ class Request {
      * @param string $default
      * @return string
      */
-    public function referer ($default = '/') {
+    public function referer ($default = null) {
         return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $default;
     }
 }

@@ -93,7 +93,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase {
     public function testReferer () {
         $request = new Request;
 
-        $this->assertEquals('/', $request->referer());
+        $this->assertEquals(null, $request->referer());
 
         $_SERVER['HTTP_REFERER'] = 'http://www.example.com/';
 
