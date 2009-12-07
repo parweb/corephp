@@ -42,13 +42,6 @@ abstract class Controller {
     protected $layout = null;
 
     /**
-     * Current request
-     *
-     * @var Controller\Request
-     */
-    protected $request = null;
-
-    /**
      * Performed?
      *
      * @var boolean
@@ -56,10 +49,22 @@ abstract class Controller {
     private $performed = false;
 
     /**
-     * Setup controller
+     * Lazy load request and session
+     *
+     * @param string $name
+     * @return Controller\Request or Controller\Session
      */
-    public function __construct () {
-        $this->request = new Controller\Request;
+    public function __get ($name) {
+        switch ($name) {
+            case 'request':
+                return $this->request = new Controller\Request;
+
+            case 'session':
+                return $this->session = new Controller\Session;
+
+            default:
+                trigger_error(sprintf('Undefined property: %s::$%s', get_class($this), $name));
+        }
     }
 
     /**
@@ -193,9 +198,8 @@ abstract class Controller {
     }
 
     /**
-     * Wrapper to procedural header()
+     * Wrapper to header function
      *
-     * @see header()
      * @param string $string
      * @param boolean $replace
      * @param integer $http_response_code

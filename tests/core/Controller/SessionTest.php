@@ -20,7 +20,7 @@
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   Controller
+ * @category   Session
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  * @version    0.1
@@ -34,25 +34,45 @@ namespace Controller;
 require_once __DIR__ . '/../../test_helper.php';
 
 /**
- * Controller suite
+ * Session tests
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   Controller
+ * @category   Session
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
-class AllTests {
-    public static function suite () {
-        $suite = new \PHPUnit_Framework_TestSuite('Controller');
+class SessionTest extends \PHPUnit_Framework_TestCase {
+    protected function setUp () {
+        $this->session = new Session;
+    }
 
-        $suite->addTest(Router\AllTests::suite());
+    protected function tearDown () {
+        unset($this->session);
+    }
 
-        $suite->addTestSuite('Controller\RouterTest');
-        $suite->addTestSuite('Controller\RequestTest');
-        $suite->addTestSuite('Controller\SessionTest');
+    public function testIsset () {
+        $this->assertFalse(isset($this->session->foo));
 
-        return $suite;
+        $this->session->foo = true;
+
+        $this->assertTrue(isset($this->session->foo));
+    }
+
+    public function testUnset () {
+        $this->assertTrue(isset($this->session->foo));
+
+        unset($this->session->foo);
+
+        $this->assertFalse(isset($this->session->foo));
+    }
+
+    public function testSetAndGet () {
+        $this->session->bar = 'bar';
+
+        $this->assertEquals('bar', $this->session->bar);
+
+        unset($this->session->bar);
     }
 }
 

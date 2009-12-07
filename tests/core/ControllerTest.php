@@ -80,5 +80,28 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('HomeController::index', $controller->action);
         $this->assertTrue($controller->after);
     }
+
+    public function testLazyLoadSessionAndRequest () {
+        $controller = Controller::dispatch('home', 'index');
+
+        $request = $controller->request;
+
+        $this->assertType('Controller\Request', $request);
+        $this->assertSame($request, $controller->request);
+
+        $session = $controller->session;
+
+        $this->assertType('Controller\Session', $session);
+        $this->assertSame($session, $controller->session);
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error
+     */
+    public function testVisiblityProtectionInLazyLoad () {
+        $controller = Controller::dispatch('home', 'index');
+
+        $this->assertEquals(null, $controller->layout);
+    }
 }
 
