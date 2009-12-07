@@ -42,11 +42,13 @@ class HomeController extends ApplicationController
     }
 
     protected function beforeAction () {
+        parent::beforeAction();
         $this->before = true;
     }
 
     protected function afterAction () {
         $this->after = true;
+        parent::afterAction();
     }
 }
 
