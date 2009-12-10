@@ -1,22 +1,14 @@
 h1. TODO
 
-h2. Utils
+h2. Framework
 
-Request format like JSON, XML, RSS, etc
-Flash class
-Session class (lazy load)
-Generate URLs
-Cookie class
+* Generate URLs
+* Cookie class
+* Test cache and adapters
 
+h3. Server
 
-h2. Search
-
-Lighttpd configuration - Use mod_magnetic
-Apache configuration - Use .htaccess
-IIS configuration - Use what?
-
-
-h2. Tests
-
-Fix coverage report
+* Lighttpd configuration - Use mod_magnetic
+* Apache configuration - Use .htaccess
+* IIS configuration - Use what?
 
