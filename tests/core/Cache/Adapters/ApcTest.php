@@ -20,55 +20,70 @@
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   Router
+ * @category   CacheAdapters
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  * @version    0.1
  */
 
-namespace Controller;
+namespace Cache\Adapters;
+
+use Config, Cache;
 
 /**
  * @see test_helper.php
  */
-require_once __DIR__ . '/../../test_helper.php';
+require_once __DIR__ . '/../../../test_helper.php';
 
 /**
- * Router tests
+ * APC adapter tests
  *
  * @package    Core
  * @subpackage UnitTests
- * @category   Router
+ * @category   CacheAdapters
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
-class RouterTest extends \PHPUnit_Framework_TestCase {
+class ApcTest extends \PHPUnit_Framework_TestCase {
     protected $backupStaticAttributes = true;
 
-    public function testConnect () {
-        $_SERVER['PATH_INFO'] = '/';
-
-        Router::connect('/');
-        Router::dispatch();
+    public static function setUpBeforeClass () {
+        Config::set('cache.adapter', 'apc');
     }
 
-    public function testModule () {
-        $_SERVER['PATH_INFO'] = '/admin';
+    protected function assertPreConditions () {
+        try {
+            Cache::getAdapter();
+        } catch (\Cache\Exception $e) {
+            $this->markTestSkipped($e->getMessage());
+        }
 
-        Router::module('admin', function ($admin) {
-            $admin->connect('/', array('controller' => 'dashboard'));
-        });
-
-        Router::dispatch();
+        if (!ini_get('apc.enable_cli')) {
+            $this->markTestSkipped('apc.enable_cli is disabled');
+        }
     }
 
-    /**
-     * @expectedException Controller\Router\Exception
-     */
-    public function testDispatchInvalidRoute () {
-        $_SERVER['PATH_INFO'] = '/undefined/route';
+    public static function tearDownAfterClass () {
+        Config::set('cache.adapter', 'file');
+    }
 
-        Router::dispatch();
+    public function testSet () {
+        $this->assertTrue(Cache::set('apc_test', 'apc_test'));
+    }
+
+    public function testGet () {
+        $this->assertEquals('apc_test', Cache::get('apc_test'));
+    }
+
+    public function testDelete () {
+        $this->assertTrue(Cache::delete('apc_test'));
+    }
+
+    public function testFlush () {
+        $this->assertTrue(Cache::set('apc_flush_test', 'apc_flush_test'));
+        $this->assertEquals('apc_flush_test', Cache::get('apc_flush_test'));
+        $this->assertTrue(Cache::flush());
+        $this->assertFalse(Cache::get('apc_flush_test'));
     }
 }
 

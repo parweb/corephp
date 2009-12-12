@@ -4,9 +4,10 @@ h2. Framework
 
 * Generate URLs
 * Cookie class
+* File cache adapter
 * Test cache and adapters
 
-h3. Server
+h2. Server
 
 * Lighttpd configuration - Use mod_magnetic
 * Apache configuration - Use .htaccess

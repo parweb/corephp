@@ -43,12 +43,14 @@ require_once __DIR__ . '/../../../test_helper.php';
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
 class RouteTest extends \PHPUnit_Framework_TestCase {
+    protected $route;
+
     protected function setUp () {
         $this->route = new Route(':controller/:action.:type');
     }
 
     protected function tearDown () {
-        unset($this->route);
+        $this->route = null;
     }
 
     public function testMatch () {

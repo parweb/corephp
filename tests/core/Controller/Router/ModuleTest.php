@@ -43,6 +43,8 @@ require_once __DIR__ . '/../../../test_helper.php';
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
 class ModuleTest extends \PHPUnit_Framework_TestCase {
+    protected $module;
+
     protected function setUp () {
         $this->module = new Module('admin', function ($admin) {
             $admin->submodule('crm', function ($system) {
@@ -54,7 +56,7 @@ class ModuleTest extends \PHPUnit_Framework_TestCase {
     }
 
     protected function tearDown () {
-        unset($this->module);
+        $this->module = null;
     }
 
     public function testMatch () {

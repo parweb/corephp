@@ -43,12 +43,14 @@ require_once __DIR__ . '/../../test_helper.php';
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
 class SessionTest extends \PHPUnit_Framework_TestCase {
+    protected $session;
+
     protected function setUp () {
         $this->session = new Session;
     }
 
     protected function tearDown () {
-        unset($this->session);
+        $this->session = null;
     }
 
     public function testIsset () {
