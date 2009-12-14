@@ -45,6 +45,8 @@ require_once __DIR__ . '/../../../test_helper.php';
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
 class MemcachedTest extends \PHPUnit_Framework_TestCase {
+    protected $backupStaticAttributes = true;
+
     public static function setUpBeforeClass () {
         Config::set('cache.adapter', 'memcached');
     }
@@ -63,6 +65,16 @@ class MemcachedTest extends \PHPUnit_Framework_TestCase {
 
     public static function tearDownAfterClass () {
         Config::set('cache.adapter', 'file');
+    }
+
+    /**
+     * @expectedException Cache\Exception
+     */
+    public function testConstruct () {
+        Config::set('cache.server', '127.0.0.1');
+
+        $memcached = new Memcached;
+        $memcached->set('memcached_test', 'memcached_test');
     }
 
     public function testSet () {

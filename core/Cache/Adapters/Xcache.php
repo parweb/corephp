@@ -79,9 +79,7 @@ class Xcache implements \Cache\Adapter {
      */
     public function flush () {
         // FIXME: this fail without XCache authentication
-        xcache_clear_cache(XC_TYPE_VAR);
-
-        return true;
+        return false;
     }
 }
 

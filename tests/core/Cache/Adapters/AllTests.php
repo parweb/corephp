@@ -20,36 +20,35 @@
  *
  * @package    Core
  * @subpackage UnitTests
+ * @category   CacheAdapters
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
- * @version    0.1.1
+ * @version    0.1
  */
+
+namespace Cache\Adapters;
 
 /**
  * @see test_helper.php
  */
-require_once __DIR__ . '/test_helper.php';
+require_once __DIR__ . '/../../../test_helper.php';
 
 /**
- * All framework tests
+ * Cache\Adapters suite
  *
  * @package    Core
  * @subpackage UnitTests
+ * @category   CacheAdapters
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
 class AllTests {
     public static function suite () {
-        $suite = new PHPUnit_Framework_TestSuite('Core PHP');
+        $suite = new \PHPUnit_Framework_TestSuite('Cache\Adapters');
 
-        $suite->addTestSuite('FunctionsTest');
-        $suite->addTestSuite('InflectorTest');
-        $suite->addTestSuite('CoreTest');
-        $suite->addTestSuite('ConfigTest');
-        $suite->addTestSuite('ControllerTest');
-
-        $suite->addTest(Cache\AllTests::suite());
-        $suite->addTest(Controller\AllTests::suite());
+        $suite->addTestSuite('Cache\Adapters\ApcTest');
+        $suite->addTestSuite('Cache\Adapters\MemcachedTest');
+        $suite->addTestSuite('Cache\Adapters\XcacheTest');
 
         return $suite;
     }

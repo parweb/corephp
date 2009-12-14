@@ -20,38 +20,64 @@
  *
  * @package    Core
  * @subpackage UnitTests
+ * @category   CacheAdapters
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
- * @version    0.1.1
+ * @version    0.1
  */
+
+namespace Cache\Adapters;
+
+use Config, Cache;
 
 /**
  * @see test_helper.php
  */
-require_once __DIR__ . '/test_helper.php';
+require_once __DIR__ . '/../../../test_helper.php';
 
 /**
- * All framework tests
+ * XCache adapter tests
  *
  * @package    Core
  * @subpackage UnitTests
+ * @category   CacheAdapters
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
-class AllTests {
-    public static function suite () {
-        $suite = new PHPUnit_Framework_TestSuite('Core PHP');
+class XcacheTest extends \PHPUnit_Framework_TestCase {
+    protected $backupStaticAttributes = true;
 
-        $suite->addTestSuite('FunctionsTest');
-        $suite->addTestSuite('InflectorTest');
-        $suite->addTestSuite('CoreTest');
-        $suite->addTestSuite('ConfigTest');
-        $suite->addTestSuite('ControllerTest');
+    public static function setUpBeforeClass () {
+        Config::set('cache.adapter', 'xcache');
+    }
 
-        $suite->addTest(Cache\AllTests::suite());
-        $suite->addTest(Controller\AllTests::suite());
+    protected function assertPreConditions () {
+        try {
+            Cache::getAdapter();
+        } catch (\Cache\Exception $e) {
+            $this->markTestSkipped($e->getMessage());
+        }
+    }
 
-        return $suite;
+    public static function tearDownAfterClass () {
+        Config::set('cache.adapter', 'file');
+    }
+
+    public function testSet () {
+        $this->assertTrue(Cache::set('xcache_test', 'xcache_test'));
+    }
+
+    public function testGet () {
+        $this->assertEquals('xcache_test', Cache::get('xcache_test'));
+    }
+
+    public function testDelete () {
+        $this->assertTrue(Cache::delete('xcache_test'));
+    }
+
+    public function testFlush () {
+        // FIXME: Fix XCache adapter
+        $this->assertFalse(Cache::flush());
     }
 }
 
