@@ -28,13 +28,15 @@
 
 namespace Cache\Adapters;
 
+use Cache;
+
 /**
  * @see test_helper.php
  */
 require_once __DIR__ . '/../../../test_helper.php';
 
 /**
- * Cache\Adapters suite
+ * File adapter tests
  *
  * @package    Core
  * @subpackage UnitTests
@@ -42,18 +44,42 @@ require_once __DIR__ . '/../../../test_helper.php';
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
-class AllTests {
-    public static function suite () {
-        $suite = new \PHPUnit_Framework_TestSuite('Cache\Adapters');
+class FileTest extends \PHPUnit_Framework_TestCase {
+    protected $backupStaticAttributes = true;
 
-        $suite->addTestSuite('Cache\Adapters\ApcTest');
-        $suite->addTestSuite('Cache\Adapters\FileTest');
-        $suite->addTestSuite('Cache\Adapters\MemcachedTest');
+    protected function assertPreConditions () {
+        try {
+            Cache::getAdapter();
+        } catch (\Cache\Exception $e) {
+            $this->markTestSkipped($e->getMessage());
+        }
+    }
 
-        // FIXME: XCache really does not work in CLI mode
-        // $suite->addTestSuite('Cache\Adapters\XcacheTest');
+    public function testSet () {
+        $this->assertTrue(Cache::set('file_test', 'file_test'));
+    }
 
-        return $suite;
+    public function testGet () {
+        $this->assertEquals('file_test', Cache::get('file_test'));
+    }
+
+    public function testSetWithTtl () {
+        $this->assertTrue(Cache::set('file_flush_test', 'file_flush_test', 1));
+
+        sleep(1.5);
+
+        $this->assertFalse(Cache::get('file_flush_test'));
+    }
+
+    public function testDelete () {
+        $this->assertTrue(Cache::delete('file_test'));
+    }
+
+    public function testFlush () {
+        $this->assertTrue(Cache::set('file_flush_test', 'file_flush_test'));
+        $this->assertEquals('file_flush_test', Cache::get('file_flush_test'));
+        $this->assertTrue(Cache::flush());
+        $this->assertFalse(Cache::get('file_flush_test'));
     }
 }
 

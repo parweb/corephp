@@ -5,7 +5,9 @@ h2. Framework
 * Generate URLs
 * Cookie class
 * File cache adapter
-* Test cache and adapters
+* Avoid Cache class and use magic methods on adapters
+* Add exists method to cache adapters
+* Return null when cache key does not exists
 
 h2. Server
 
