@@ -69,6 +69,9 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
         Controller::dispatch('home', 'before_action');
     }
 
+    /**
+     * @outputBuffering enabled
+     */
     public function testDispatchPublicAction () {
         $controller = Controller::dispatch('home', 'index');
 
@@ -77,6 +80,9 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($controller->after);
     }
 
+    /**
+     * @outputBuffering enabled
+     */
     public function testLazyLoadSessionAndRequest () {
         $controller = Controller::dispatch('home', 'index');
 
@@ -93,6 +99,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @expectedException PHPUnit_Framework_Error
+     * @outputBuffering enabled
      */
     public function testVisiblityProtectionInLazyLoad () {
         $controller = Controller::dispatch('home', 'index');

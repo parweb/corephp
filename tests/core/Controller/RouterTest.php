@@ -45,6 +45,9 @@ require_once __DIR__ . '/../../test_helper.php';
 class RouterTest extends \PHPUnit_Framework_TestCase {
     protected $backupStaticAttributes = true;
 
+    /**
+     * @outputBuffering enabled
+     */
     public function testConnect () {
         $_SERVER['PATH_INFO'] = '/';
 
@@ -52,6 +55,9 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
         Router::dispatch();
     }
 
+    /**
+     * @outputBuffering enabled
+     */
     public function testModule () {
         $_SERVER['PATH_INFO'] = '/admin';
 

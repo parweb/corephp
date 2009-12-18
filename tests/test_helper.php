@@ -45,8 +45,7 @@ require_once '../core/functions.php';
 // Set include path
 $cwd = getcwd();
 
-append_include_path("$cwd/../core", "$cwd/app/models", "$cwd/app/controllers", "$cwd/app/helpers");
-append_include_path("$cwd/core");
+append_include_path("$cwd/../core", "$cwd/core", "$cwd/app/controllers");
 
 unset($cwd);
 
