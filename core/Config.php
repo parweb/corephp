@@ -71,4 +71,3 @@ abstract class Config {
         self::$configs[$key] = $value;
     }
 }
-

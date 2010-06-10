@@ -105,4 +105,3 @@ abstract class Cache {
         return self::getAdapter()->flush();
     }
 }
-
