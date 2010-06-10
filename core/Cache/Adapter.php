@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Core PHP Framework
  * Copyright (C) 2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
@@ -35,6 +36,7 @@ namespace Cache;
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
+
 interface Adapter {
     /**
      * Retrieve item from the server
@@ -43,7 +45,7 @@ interface Adapter {
      * @param mixed $default
      * @return mixed
      */
-    public function get ($key);
+    public function get ( $key );
 
     /**
      * Store data at the server
@@ -53,7 +55,7 @@ interface Adapter {
      * @param integer $ttl
      * @return boolean true on success or false otherwise
      */
-    public function set ($key, $value, $ttl);
+    public function set ( $key, $value, $ttl) ;
 
     /**
      * Delete item from the server
@@ -61,7 +63,7 @@ interface Adapter {
      * @param string $key
      * @return boolean true on success or false otherwise
      */
-    public function delete ($key);
+    public function delete ( $key );
 
     /**
      * Flush all existing items at the server
@@ -70,4 +72,3 @@ interface Adapter {
      */
     public function flush ();
 }
-

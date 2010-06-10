@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Core PHP Framework
  * Copyright (C) 2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
@@ -33,6 +34,7 @@
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
+ 
 abstract class Cache {
     /**
      * Cache adapter
@@ -48,11 +50,11 @@ abstract class Cache {
      * @throws Cache\Exception when adapter not found or isn't a valid cache adapter
      */
     public static function getAdapter () {
-        if (!self::$adapter instanceof Cache\Adapter) {
-            $adapter = 'Cache\Adapters\\' . Inflector::camelize(Config::get('cache.adapter', 'file'));
+        if ( !self::$adapter instanceof Cache\Adapter ) {
+            $adapter = 'Cache\Adapters\\' . Inflector::camelize( Config::get( 'cache.adapter', 'file' ) );
 
-            if (!class_exists($adapter) || !in_array('Cache\Adapter', class_implements($adapter))) {
-                throw new Cache\Exception("Cache adapter `$adapter' not found or isn't a valid cache adapter");
+            if ( !class_exists( $adapter ) || !in_array( 'Cache\Adapter', class_implements( $adapter ) ) ) {
+                throw new Cache\Exception( "Cache adapter `$adapter' not found or isn't a valid cache adapter" );
             }
 
             self::$adapter = new $adapter;
@@ -68,8 +70,8 @@ abstract class Cache {
      * @param mixed $default
      * @return mixed
      */
-    public static function get ($key, $default = null) {
-        return self::getAdapter()->get($key);
+    public static function get ( $key, $default = null ) {
+        return self::getAdapter()->get( $key );
     }
 
     /**
@@ -80,8 +82,8 @@ abstract class Cache {
      * @param integer $ttl
      * @return boolean true on success or false otherwise
      */
-    public static function set ($key, $value, $ttl = 0) {
-        return self::getAdapter()->set($key, $value, $ttl);
+    public static function set ( $key, $value, $ttl = 0 ) {
+        return self::getAdapter()->set( $key, $value, $ttl );
     }
 
     /**
@@ -90,8 +92,8 @@ abstract class Cache {
      * @param string $key
      * @return boolean true on success or false otherwise
      */
-    public static function delete ($key) {
-        return self::getAdapter()->delete($key);
+    public static function delete ( $key ) {
+        return self::getAdapter()->delete( $key );
     }
 
     /**

@@ -37,6 +37,7 @@ namespace Cache\Adapters;
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
+ 
 class File implements \Cache\Adapter {
     /**
      * Verify file cache support
@@ -44,30 +45,30 @@ class File implements \Cache\Adapter {
      * @throws \Cache\Exception when cache dir isn't writable
      */
     public function __construct () {
-        $this->directory = \Config::get('cache.directory', 'tmp/cache');
+        $this->directory = \Config::get( 'cache.directory', 'tmp/cache' );
 
-        if(!is_dir($this->directory) || !is_writable($this->directory)) {
-            throw new \Cache\Exception("Cache directory `$this->directory' does not exists or is not writable");
+        if( !is_dir($this->directory ) || !is_writable( $this->directory ) ) {
+            throw new \Cache\Exception( "Cache directory `$this->directory' does not exists or is not writable" );
         }
 
-        $this->directory = realpath($this->directory);
+        $this->directory = realpath( $this->directory );
     }
 
     /**
      * (non-PHPdoc)
      * @see \Cache\Adapter::get()
      */
-    public function get ($key) {
-        $fileName = $this->getFileName($key);
+    public function get ( $key ) {
+        $fileName = $this->getFileName( $key );
 
-        if (!file_exists($fileName)) {
+        if ( !file_exists( $fileName ) ) {
             return false;
         }
 
-        list($expires, $data) = unserialize(file_get_contents($fileName));
+        list( $expires, $data ) = unserialize( file_get_contents( $fileName ) );
 
-        if ($expires && $expires <= time()) {
-            $this->delete($key);
+        if ( $expires && $expires <= time() ) {
+            $this->delete( $key );
             return false;
         }
 
@@ -78,22 +79,22 @@ class File implements \Cache\Adapter {
      * (non-PHPdoc)
      * @see \Cache\Adapter::set()
      */
-    public function set ($key, $value, $ttl = 0) {
-        if ($ttl) {
+    public function set ( $key, $value, $ttl = 0 ) {
+        if ( $ttl ) {
             $ttl = time() + $ttl;
         }
 
-        $data = serialize(array($ttl, $value));
+        $data = serialize( array( $ttl, $value ) );
 
-        return (bool) file_put_contents($this->getFileName($key), $data, LOCK_EX);
+        return (bool)file_put_contents( $this->getFileName( $key ), $data, LOCK_EX );
     }
 
     /**
      * (non-PHPdoc)
      * @see \Cache\Adapter::delete()
      */
-    public function delete ($key) {
-        return unlink($this->getFileName($key));
+    public function delete ( $key ) {
+        return unlink( $this->getFileName( $key ) );
     }
 
     /**
@@ -103,8 +104,8 @@ class File implements \Cache\Adapter {
     public function flush () {
         $pattern = $this->directory . DIRECTORY_SEPARATOR . '*';
 
-        foreach(new \GlobIterator($pattern, \GlobIterator::CURRENT_AS_PATHNAME) as $file) {
-            unlink($file);
+        foreach( new \GlobIterator( $pattern, \GlobIterator::CURRENT_AS_PATHNAME ) as $file ) {
+            unlink( $file );
         }
 
         return true;
@@ -116,8 +117,7 @@ class File implements \Cache\Adapter {
      * @param string $key
      * @return string
      */
-    protected function getFileName ($key) {
-        return $this->directory . DIRECTORY_SEPARATOR . md5($key);
+    protected function getFileName ( $key ) {
+        return $this->directory . DIRECTORY_SEPARATOR . md5( $key );
     }
 }
-

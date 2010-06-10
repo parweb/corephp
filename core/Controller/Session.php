@@ -1,14 +1,15 @@
 <?php
+
 /**
  * Core PHP Framework
- * Copyright (C) 2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
+ * Copyright ( C ) 2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  *
  * This file is part of Core PHP Framework.
  *
  * Core PHP Framework is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * ( at your option ) any later version.
  *
  * Core PHP Framework is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -18,11 +19,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Core PHP Framework. If not, see <http://www.gnu.org/licenses/>.
  *
- * @package    Core
+ * @package	Core
  * @subpackage Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
- * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
- * @version    0.1
+ * @license	http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 ( LGPLv3 )
+ * @version	0.1
  */
 
 namespace Controller;
@@ -30,78 +31,78 @@ namespace Controller;
 /**
  * Session class
  *
- * @package    Core
+ * @package	Core
  * @subpackage Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
- * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
+ * @license	http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 ( LGPLv3 )
  */
+
 class Session {
-    /**
-     * Flash data
-     *
-     * @var mixed
-     */
-    protected $flash;
+	/**
+	 * Flash data
+	 *
+	 * @var mixed
+	 */
+	protected $flash;
 
-    /**
-     * Initialize session data
-     */
-    public function __construct () {
-        session_start();
+	/**
+	 * Initialize session data
+	 */
+	public function __construct () {
+		session_start();
 
-        if (isset($_SESSION['flash'])) {
-            $this->flash = $_SESSION['flash'];
-        }
-    }
+		if ( isset( $_SESSION['flash'] ) ) {
+			$this->flash = $_SESSION['flash'];
+		}
+	}
 
-    /**
-     * Write session data and end session
-     */
-    public function __destruct () {
-        if (isset($_SESSION['flash']) && $_SESSION['flash'] == $this->flash) {
-            unset($_SESSION['flash']);
-        }
+	/**
+	 * Write session data and end session
+	 */
+	public function __destruct () {
+		if ( isset( $_SESSION['flash'] ) && $_SESSION['flash'] == $this->flash ) {
+			unset( $_SESSION['flash'] );
+		}
 
-        session_write_close();
-    }
+		session_write_close();
+	}
 
-    /**
-     * Retrive a variable from session
-     *
-     * @param string $name
-     * @return mixed
-     */
-    public function __get ($name) {
-        return $_SESSION[$name];
-    }
+	/**
+	 * Retrive a variable from session
+	 *
+	 * @param string $name
+	 * @return mixed
+	 */
+	public function __get ( $name ) {
+		return $_SESSION[$name];
+	}
 
-    /**
-     * Register a session variable
-     *
-     * @param string $name
-     * @param mixed $value
-     */
-    public function __set ($name, $value) {
-        $_SESSION[$name] = $value;
-    }
+	/**
+	 * Register a session variable
+	 *
+	 * @param string $name
+	 * @param mixed $value
+	 */
+	public function __set ( $name, $value ) {
+		$_SESSION[$name] = $value;
+	}
 
-    /**
-     * Verify if a session variable is registered
-     *
-     * @param string $name
-     * @return boolean
-     */
-    public function __isset ($name) {
-        return isset($_SESSION[$name]);
-    }
+	/**
+	 * Verify if a session variable is registered
+	 *
+	 * @param string $name
+	 * @return boolean
+	 */
+	public function __isset ( $name ) {
+		return isset( $_SESSION[$name] );
+	}
 
-    /**
-     * Unregister a session variable
-     *
-     * @var string $name
-     */
-    public function __unset ($name) {
-        unset($_SESSION[$name]);
-    }
+	/**
+	 * Unregister a session variable
+	 *
+	 * @var string $name
+	 */
+	public function __unset ( $name ) {
+		unset( $_SESSION[$name] );
+	}
 }
-

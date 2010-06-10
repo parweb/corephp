@@ -1,14 +1,15 @@
 <?php
+
 /**
  * Core PHP Framework
- * Copyright (C) 2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
+ * Copyright ( C ) 2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  *
  * This file is part of Core PHP Framework.
  *
  * Core PHP Framework is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * ( at your option ) any later version.
  *
  * Core PHP Framework is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,7 +22,7 @@
  * @package    Core
  * @subpackage Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
- * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
+ * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 ( LGPLv3 )
  * @version    0.1
  */
 
@@ -33,7 +34,7 @@ namespace Controller;
  * @package    Core
  * @subpackage Controller
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
- * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
+ * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 ( LGPLv3 )
  */
 class Request {
     /**
@@ -72,13 +73,13 @@ class Request {
     const PUT = 'PUT';
 
     /**
-     * Override request method if request is POST and param('_method') is valid
+     * Override request method if request is POST and param( '_method' ) is valid
      */
     public function __construct () {
-        if ($this->isPost() && $method = param('_method')) {
-            $method = strtoupper($method);
+        if ( $this->isPost() && $method = param( '_method' ) ) {
+            $method = strtoupper( $method );
 
-            if (in_array($method, array(self::HEAD, self::DELETE, self::PUT))) {
+            if ( in_array( $method, array( self::HEAD, self::DELETE, self::PUT ) ) ) {
                 $_SERVER['REQUEST_METHOD'] = $method;
             }
         }
@@ -90,7 +91,7 @@ class Request {
      * @return string or false
      */
     public function method () {
-        return isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : false;
+        return isset( $_SERVER['REQUEST_METHOD'] ) ? $_SERVER['REQUEST_METHOD'] : false;
     }
 
     /**
@@ -144,7 +145,7 @@ class Request {
      * @return boolean
      */
     public function isAjax () {
-        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XmlHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH'];
+        return isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && 'XmlHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH'];
     }
 
     /**
@@ -153,8 +154,7 @@ class Request {
      * @param string $default
      * @return string
      */
-    public function referer ($default = null) {
-        return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : $default;
+    public function referer ( $default = null ) {
+        return isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : $default;
     }
 }
-

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Core PHP Framework
  * Copyright (C) 2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
@@ -35,6 +36,7 @@ namespace View;
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
+ 
 class Exception extends \Exception {
+	
 }
-

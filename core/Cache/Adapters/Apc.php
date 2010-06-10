@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Core PHP Framework
  * Copyright (C) 2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
@@ -37,6 +38,7 @@ namespace Cache\Adapters;
  * @copyright  2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
  * @license    http://opensource.org/licenses/lgpl-3.0.html GNU Lesser General Public License version 3 (LGPLv3)
  */
+
 class Apc implements \Cache\Adapter {
     /**
      * Verify APC support
@@ -44,8 +46,8 @@ class Apc implements \Cache\Adapter {
      * @throws \Cache\Exception when APC isn't loaded
      */
     public function __construct () {
-        if (!extension_loaded('apc')) {
-            throw new \Cache\Exception("Could not find extension APC");
+        if ( !extension_loaded( 'apc' ) ) {
+            throw new \Cache\Exception( "Could not find extension APC" );
         }
     }
 
@@ -53,24 +55,24 @@ class Apc implements \Cache\Adapter {
      * (non-PHPdoc)
      * @see \Cache\Adapter::get()
      */
-    public function get ($key) {
-        return apc_fetch($key);
+    public function get ( $key ) {
+        return apc_fetch( $key );
     }
 
     /**
      * (non-PHPdoc)
      * @see \Cache\Adapter::set()
      */
-    public function set ($key, $value, $ttl = 0) {
-        return apc_store($key, $value, $ttl);
+    public function set ( $key, $value, $ttl = 0 ) {
+        return apc_store( $key, $value, $ttl );
     }
 
     /**
      * (non-PHPdoc)
      * @see \Cache\Adapter::delete()
      */
-    public function delete ($key) {
-        return apc_delete($key);
+    public function delete ( $key ) {
+        return apc_delete( $key );
     }
 
     /**
@@ -78,7 +80,6 @@ class Apc implements \Cache\Adapter {
      * @see \Cache\Adapter::flush()
      */
     public function flush () {
-        return apc_clear_cache('user');
+        return apc_clear_cache( 'user' );
     }
 }
-

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Core PHP Framework
  * Copyright (C) 2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
@@ -26,19 +27,19 @@
 
 // Buffer and error reporting
 ob_start();
-error_reporting(E_ALL | E_STRICT);
+error_reporting( E_ALL | E_STRICT );
 
 // Go to framework dir
-chdir(dirname(__DIR__));
+chdir( dirname( __DIR__ ) );
 
 // Autoload
 require_once 'core/functions.php';
 
 // Set include path
 $cwd = getcwd();
-append_include_path("$cwd/core", "$cwd/app/models", "$cwd/app/controllers", "$cwd/app/helpers");
+append_include_path( "$cwd/core", "$cwd/app/models", "$cwd/app/controllers", "$cwd/app/helpers" );
 
-unset($cwd);
+unset( $cwd );
 
 // Boot and dispatch request
 Core::boot();

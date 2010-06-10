@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Core PHP Framework
  * Copyright (C) 2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
@@ -26,4 +27,3 @@
  */
 
 setlocale( LC_ALL, 'fr_FR.UTF8' );
-

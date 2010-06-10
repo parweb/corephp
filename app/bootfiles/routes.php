@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Core PHP Framework
  * Copyright (C) 2008-2009 Gabriel Sobrinho <gabriel@corephp.org>
@@ -28,10 +29,9 @@
 use Controller\Router;
 
 // Admin route
-Router::module('admin', function ($admin) {
-    $admin->connect('/', array('controller' => 'dashboard'));
+Router::module( 'admin', function ( $admin ) {
+    $admin->connect( '/', array( 'controller' => 'dashboard' ) );
 });
 
 // Root route
-Router::connect('/');
-
+Router::connect( '/' );
