@@ -25,5 +25,5 @@
  * @version    0.1
  */
 
-setlocale(LC_ALL, 'fr_FR.UTF8');
+setlocale( LC_ALL, 'fr_FR.UTF8' );
 
