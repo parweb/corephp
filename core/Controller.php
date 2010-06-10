@@ -113,8 +113,7 @@ abstract class Controller {
         $kontroller->beforeAction();
 
         if ($kontroller->$action() !== false && !$kontroller->performed) {
-            // $kontroller->render();
-            var_dump(__METHOD__);
+            $kontroller->render();
         }
 
         $kontroller->afterAction();
@@ -140,7 +139,7 @@ abstract class Controller {
      * @param string $template
      * @param string $layout
      */
-    /*protected function render ($template = null, $layout = null) {
+    protected function render ($template = null, $layout = null) {
         $this->perform();
 
         if (!$template) {
@@ -158,7 +157,7 @@ abstract class Controller {
         $view->set($this);
 
         echo $view->render();
-    }*/
+    }
 
     /**
      * Redirect request to $url
