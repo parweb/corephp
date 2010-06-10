@@ -37,7 +37,7 @@
  */
 class HomeController extends ApplicationController {
     public function index () {
-        var_dump($this->session);
+        
     }
 }
 
