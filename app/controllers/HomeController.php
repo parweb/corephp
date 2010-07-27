@@ -38,6 +38,6 @@
  */
 class HomeController extends ApplicationController {
     public function index () {
-        $plop = 'hey';
+        $plop = 'hey !';
     }
 }
