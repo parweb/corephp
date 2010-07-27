@@ -38,67 +38,13 @@
 		<array>
 			<dict>
 				<key>DocumentURL</key>
-				<string>file://localhost/Users/parweb/Sites/gitframework/corephp/.htaccess</string>
-				<key>StateType</key>
-				<string>DefaultTab</string>
-			</dict>
-			<dict>
-				<key>DocumentURL</key>
-				<string>file://localhost/Users/parweb/Sites/gitframework/corephp/app/config/application.ini</string>
-				<key>StateType</key>
-				<string>DefaultTab</string>
-			</dict>
-			<dict>
-				<key>DocumentURL</key>
-				<string>file://localhost/Users/parweb/Sites/gitframework/corephp/app/controllers/ApplicationController.php</string>
-				<key>StateType</key>
-				<string>DefaultTab</string>
-			</dict>
-			<dict>
-				<key>DocumentURL</key>
 				<string>file://localhost/Users/parweb/Sites/gitframework/corephp/app/controllers/HomeController.php</string>
 				<key>StateType</key>
 				<string>DefaultTab</string>
 			</dict>
 			<dict>
 				<key>DocumentURL</key>
-				<string>file://localhost/Users/parweb/Sites/gitframework/corephp/app/helpers/ApplicationHelper.php</string>
-				<key>StateType</key>
-				<string>DefaultTab</string>
-			</dict>
-			<dict>
-				<key>DocumentURL</key>
-				<string>file://localhost/Users/parweb/Sites/gitframework/corephp/app/helpers/HomeHelper.php</string>
-				<key>StateType</key>
-				<string>DefaultTab</string>
-			</dict>
-			<dict>
-				<key>DocumentURL</key>
-				<string>file://localhost/Users/parweb/Sites/gitframework/corephp/core/Cache.php</string>
-				<key>StateType</key>
-				<string>DefaultTab</string>
-			</dict>
-			<dict>
-				<key>DocumentURL</key>
-				<string>file://localhost/Users/parweb/Sites/gitframework/corephp/core/Config.php</string>
-				<key>StateType</key>
-				<string>DefaultTab</string>
-			</dict>
-			<dict>
-				<key>DocumentURL</key>
-				<string>file://localhost/Users/parweb/Sites/gitframework/corephp/core/Controller/Router/Exception.php</string>
-				<key>StateType</key>
-				<string>DefaultTab</string>
-			</dict>
-			<dict>
-				<key>DocumentURL</key>
-				<string>file://localhost/Users/parweb/Sites/gitframework/corephp/core/Controller/Router/Module.php</string>
-				<key>StateType</key>
-				<string>DefaultTab</string>
-			</dict>
-			<dict>
-				<key>DocumentURL</key>
-				<string>file://localhost/Users/parweb/Sites/gitframework/corephp/core/Controller/Router/Route.php</string>
+				<string>file://localhost/Users/parweb/Sites/gitframework/corephp/app/views/home/index.phtml</string>
 				<key>StateType</key>
 				<string>DefaultTab</string>
 			</dict>
